@@ -1,4 +1,4 @@
-angular.module('ng.zl', ['ng', 'ngMaterial', 'ng.zl.sha256', 'ng.zl.templates']).factory('ZLService', function ($mdDialog, $mdToast, $compile, $rootScope, $templateRequest, $timeout, Sha256Service, $q) {
+angular.module('ng.zl', ['ng', 'ngMaterial', 'ng.zl.sha256', 'ng.zl.templates']).factory('$zl', function ($mdDialog, $mdToast, $compile, $rootScope, $templateRequest, $timeout, $zlSha256, $q) {
     'use strict';
 
     var $container = $(document.body);
@@ -122,7 +122,7 @@ angular.module('ng.zl', ['ng', 'ngMaterial', 'ng.zl.sha256', 'ng.zl.templates'])
         progress: progress,
         scroll: scroll,
         format: format,
-        sha256: Sha256Service,
+        sha256: $zlSha256,
         userInfo: userInfo
     };
 

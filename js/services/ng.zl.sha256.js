@@ -1,4 +1,4 @@
-angular.module('ng.zl.sha256', []).factory('Sha256Service', function () {
+angular.module('ng.zl.sha256', []).factory('$zlSha256', function () {
     'use strict';
     var sha256 = function (str) {
         function rotateRight(n, x) {

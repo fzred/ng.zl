@@ -1,6 +1,130 @@
-angular.module("ng.zl.templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("views/progress.html","<div class=\"zl-progress\" ng-if=\"show\">\r\n    <md-progress-circular md-mode=\"indeterminate\"></md-progress-circular>\r\n</div>");
+angular.module("ng.zl.templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("views/grid.edit.html","<div class=\"zl-grid-edit\" ng-dblclick=\"onEdit($event)\">\r\n    <span ng-bind=\"gridModel\" ng-show=\"!edit\"></span>\r\n    <input type=\"text\" tabindex=\"-1\" ng-model=\"gridModel\" ng-show=\"edit\" ng-blur=\"cancelEdit()\" ng-keyup=\"onEnter($event)\" focus-on-directive=\"zlGridEditInput\"/>\r\n</div>");
+$templateCache.put("views/grid.html","<div class=\"zl-grid\">\r\n    <table class=\"table table-striped table-hover table-condensed\">\r\n        <thead>\r\n        <tr>\r\n            <th ng-if=\"config.enableSelect\" class=\"zl-grid-select\">\r\n                <md-checkbox ng-click=\"onCheckAll($event)\"></md-checkbox>\r\n            </th>\r\n            <th ng-repeat=\"col in config.columns\" ng-bind=\"col.name\"></th>\r\n            <th ng-if=\"config.actions.length > 0\">操作</th>\r\n        </tr>\r\n        </thead>\r\n        <tbody>\r\n        <tr ng-repeat=\"data in config.data\">\r\n            <td ng-if=\"config.enableSelect\" class=\"zl-grid-select\">\r\n                <md-checkbox ng-model=\"data._checked\"></md-checkbox>\r\n            </td>\r\n            <td ng-repeat=\"col in config.columns\">\r\n                <span ng-if=\"!col.edit\" ng-bind=\"data[col.field]\" style=\"{{col.style}}\"></span>\r\n                <div ng-if=\"col.edit\">\r\n                    <div grid-edit-directive grid-model=\"data[col.field]\" grid-after-edit=\"onAfterEdit(value, col, data)\"></div>\r\n                </div>\r\n            </td>\r\n\r\n            <td ng-if=\"config.actions.length > 0\">\r\n                <md-button ng-repeat=\"act in config.actions\" class=\"md-raised {{act.className}}\" ng-bind=\"act.html\"\r\n                           ng-click=\"act.action(data, config.data, $event)\"></md-button>\r\n            </td>\r\n        </tr>\r\n        </tbody>\r\n    </table>\r\n    <div layout=\"row\">\r\n        <md-button class=\"md-raised\" ng-click=\"getData()\" ng-if=\"config.next\">More</md-button>\r\n        <md-button class=\"md-raised\" ng-if=\"!config.next\" ng-disabled=\"true\">No More</md-button>\r\n        <div flex ng-if=\"config.enableSelect && config.actions.length > 0\">\r\n            <md-button ng-repeat=\"act in config.actions\" class=\"md-raised {{act.className}}\" ng-bind=\"act.html\"\r\n                       ng-click=\"onBatch(act, $event)\"></md-button>\r\n        </div>\r\n    </div>\r\n</div>");
+$templateCache.put("views/progress.html","<div class=\"zl-progress\" ng-if=\"show\">\r\n    <md-progress-circular md-mode=\"indeterminate\"></md-progress-circular>\r\n</div>");
 $templateCache.put("views/toast.html","<div class=\"zl-toast-container\">\r\n    <md-toast ng-repeat=\"t in list\" class=\"md-default-theme\">\r\n        <span ng-bind=\"t.word\"></span>\r\n    </md-toast>\r\n</div>");}]);
-angular.module('ng.zl', ['ng', 'ngMaterial', 'ng.zl.sha256', 'ng.zl.templates']).factory('ZLService', ["$mdDialog", "$mdToast", "$compile", "$rootScope", "$templateRequest", "$timeout", "Sha256Service", "$q", function ($mdDialog, $mdToast, $compile, $rootScope, $templateRequest, $timeout, Sha256Service, $q) {
+angular.module('ng.zl.grid', ['ng.zl', 'ng.zl.grid.edit']).directive('zlGrid', ["$zl", function ($zl) {
+    'use strict';
+
+    return {
+        restrict: 'A',
+        replace: true,
+        scope: {
+            config: '='
+        },
+        templateUrl: 'views/grid.html',
+        controller: ["$scope", function ($scope) {
+            _.each($scope.config.columns, function (value) {
+                if (value.edit) {
+                    value.afterEdit = value.afterEdit || function () {
+                        };
+                }
+            });
+
+            $scope.config = _.extend({
+                enableSelect: false,
+                columns: null,
+                data: [],
+                next: null,
+                actions: []
+            }, $scope.config);
+
+            $scope.checkAll = false;
+            $scope.onCheckAll = function () {
+                $scope.checkAll = !$scope.checkAll;
+                _.each($scope.config.data, function (value) {
+                    value._checked = $scope.checkAll;
+                });
+            };
+
+            $scope.onBatch = function (action, event) {
+                var selects = _.filter($scope.config.data, function (value) {
+                    return value._checked;
+                });
+                if (selects.length > 0) {
+                    action.batch(selects, $scope.config.data, event);
+                }
+            };
+
+            $scope.onAfterEdit = function (value, col, data) {
+                if (value.newValue !== value.oldValue) {
+                    var promise = col.afterEdit(data, col, value.newValue, value.oldValue);
+                    if(promise){
+                        promise.then(function () {
+                            $zl.tips('修改成功');
+                        }, function () {
+                            $zl.tips('修改失败');
+                            data[col.field] = value.oldValue;
+                        });
+                    }
+                }
+            };
+
+            $scope.getData = function () {
+                $scope.config.getData($scope.config.next).then(function (data) {
+                    _.each(data, function (value, key) {
+                        if (key !== 'pageOffset' && key !== 'pageAnchor') {
+                            $scope.config.data = $scope.config.data.concat(value || []);
+                        }
+                    });
+                    $scope.config.next = data.nextPageOffset || data.nextPageAnchor;
+                });
+            };
+
+            $scope.getData();
+        }]
+    };
+}]);
+
+angular.module('ng.zl.grid.edit', []).directive('zlGridEdit', ["FocusOnService", function (FocusOnService) {
+    'use strict';
+
+    return {
+        restrict: 'A',
+        replace: true,
+        scope: {
+            gridModel: '=',
+            gridAfterEdit: '&'
+        },
+        templateUrl: 'views/grid.edit.html',
+        controller: ["$scope", "$element", function ($scope, $element) {
+            $scope.edit = false;
+
+            var oldValue = $scope.gridModel;
+
+            // 这里很纠结 如果采用ng-show 的方式,则计算width不准确。因为一开始input显示出来占地方。
+            // 如果采用ng-if的话，导致模型更新不及时。 gridModel 还是旧数据
+            // and  模型的更新还是挺重要的。 所以采用ng-show 方案。 至于计算宽度问题，一开始把input display:none 掉就好了。 哈哈
+            $element.closest('td').width($element.width());
+
+            $scope.onEdit = function (event) {
+                $element.addClass('zl-grid-edit-on');
+                $scope.edit = true;
+                FocusOnService('zlGridEditInput');
+            };
+
+            $scope.cancelEdit = function () {
+                $scope.edit = false;
+                $scope.gridModel = oldValue;
+            };
+
+            $scope.onEnter = function (event) {
+                if (event.keyCode === 13) {
+                    $scope.edit = false;
+                    $scope.gridAfterEdit({
+                        value: {
+                            newValue: $scope.gridModel,
+                            oldValue: oldValue
+                        }
+                    });
+                }else if(event.keyCode === 27){
+                    $scope.edit = false;
+                    $scope.gridModel = oldValue;
+                }
+            };
+        }]
+    };
+}]);
+angular.module('ng.zl', ['ng', 'ngMaterial', 'ng.zl.sha256', 'ng.zl.templates']).factory('$zl', ["$mdDialog", "$mdToast", "$compile", "$rootScope", "$templateRequest", "$timeout", "$zlSha256", "$q", function ($mdDialog, $mdToast, $compile, $rootScope, $templateRequest, $timeout, $zlSha256, $q) {
     'use strict';
 
     var $container = $(document.body);
@@ -124,7 +248,7 @@ angular.module('ng.zl', ['ng', 'ngMaterial', 'ng.zl.sha256', 'ng.zl.templates'])
         progress: progress,
         scroll: scroll,
         format: format,
-        sha256: Sha256Service,
+        sha256: $zlSha256,
         userInfo: userInfo
     };
 
@@ -133,7 +257,7 @@ angular.module('ng.zl', ['ng', 'ngMaterial', 'ng.zl.sha256', 'ng.zl.templates'])
 
     return ZL;
 }]);
-angular.module('ng.zl.sha256', []).factory('Sha256Service', function () {
+angular.module('ng.zl.sha256', []).factory('$zlSha256', function () {
     'use strict';
     var sha256 = function (str) {
         function rotateRight(n, x) {
