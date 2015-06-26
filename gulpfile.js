@@ -11,7 +11,7 @@
     var del = require('del');
     var rename = require('gulp-rename');
 
-    var moduleName = 'ng.zl';
+    var moduleName = 'ng.zl.templates';
 
     gulp.task('default', function () {
 
@@ -33,7 +33,12 @@
 
     gulp.task('templates', function () {
         return gulp.src('views/*.html')
-            .pipe(ngTemplates(moduleName))
+            .pipe(ngTemplates({
+                module: moduleName,
+                path: function (path, base) {
+                    return path.replace(base, 'views\\');
+                }
+            }))
             .pipe(gulp.dest('dist/js'));
     });
 

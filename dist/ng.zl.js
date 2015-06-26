@@ -1,6 +1,6 @@
-angular.module("ng.zl", []).run(["$templateCache", function($templateCache) {$templateCache.put("progress.html","<div class=\"zl-progress\" ng-if=\"show\">\r\n    <md-progress-circular md-mode=\"indeterminate\"></md-progress-circular>\r\n</div>");
-$templateCache.put("toast.html","<div class=\"zl-toast-container\">\r\n    <md-toast ng-repeat=\"t in list\" class=\"md-default-theme\">\r\n        <span ng-bind=\"t.word\"></span>\r\n    </md-toast>\r\n</div>");}]);
-angular.module('ng.zl', ['ng', 'ngMaterial', 'ng.zl.sha256']).factory('ZLService', ["$mdDialog", "$mdToast", "$compile", "$rootScope", "$templateRequest", "$timeout", "Sha256Service", function ($mdDialog, $mdToast, $compile, $rootScope, $templateRequest, $timeout, Sha256Service) {
+angular.module("ng.zl.templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("views/progress.html","<div class=\"zl-progress\" ng-if=\"show\">\r\n    <md-progress-circular md-mode=\"indeterminate\"></md-progress-circular>\r\n</div>");
+$templateCache.put("views/toast.html","<div class=\"zl-toast-container\">\r\n    <md-toast ng-repeat=\"t in list\" class=\"md-default-theme\">\r\n        <span ng-bind=\"t.word\"></span>\r\n    </md-toast>\r\n</div>");}]);
+angular.module('ng.zl', ['ng', 'ngMaterial', 'ng.zl.sha256', 'ng.zl.templates']).factory('ZLService', ["$mdDialog", "$mdToast", "$compile", "$rootScope", "$templateRequest", "$timeout", "Sha256Service", function ($mdDialog, $mdToast, $compile, $rootScope, $templateRequest, $timeout, Sha256Service) {
     'use strict';
 
     var $container = $(document.body);

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../bower_components/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.css">
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="../dist/ng.zl.css"/>
+</head>
+<body ng-controller="DemoController">
+
+<div>
+    <div>
+        <md-button ng-click="onAlert($event)">alert</md-button>
+        <md-button ng-click="onConfirm($event)">confirm</md-button>
+        <md-button ng-click="onToast()">toast</md-button>
+        <md-button ng-click="onProgressStart()">progress start</md-button>
+        <md-button ng-click="onProgressDone()">progress done</md-button>
+    </div>
+    <!--<div ng-controller="DemoSubController">-->
+        <!--<div layout="row">-->
+            <!--<div flex region-pick-directive="province" ng-model="province"></div>-->
+            <!--<div flex region-pick-directive="city" region-parent="province" ng-model="city"></div>-->
+            <!--<div flex region-pick-directive="area" region-parent="city" ng-model="area"></div>-->
+        <!--</div>-->
+
+        <!--<div flex region-pick-directive="city" pick-chips="true" ng-model="citys"></div>-->
+
+
+        <!--<div layout="row">-->
+            <!--<div flex community-pick-directive pick-city-id="5636106" ng-model="community"></div>-->
+
+            <!--<div flex building-pick-directive pick-community-id="14" ng-model="building"></div>-->
+
+            <!--<div flex apartment-pick-directive pick-community-id="14" pick-building-name="'1-1'" ng-model="apartment"></div>-->
+        <!--</div>-->
+
+        <!--<div flex community-pick-directive pick-city-id="5636106" pick-chips="true" ng-model="communitys"></div>-->
+
+        <!--<div flex building-pick-directive pick-community-id="14" pick-chips="true" ng-model="buildings"></div>-->
+
+        <!--<div flex apartment-pick-directive pick-community-id="14" pick-building-name="'1-1'" pick-chips="true" ng-model="apartments"></div>-->
+    <!--</div>-->
+
+</div>
+
+<!-- inject:js -->
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/underscore/underscore-min.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+<script src="../bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="../bower_components/angular-aria/angular-aria.min.js"></script>
+<script src="../bower_components/angular-material/angular-material.min.js"></script>
+
+<script src="../dist/ng.zl.js"></script>
+
+<script src="app.js"></script>
+</body>
+</html>
