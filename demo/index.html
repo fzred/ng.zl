@@ -12,13 +12,18 @@
 <body ng-controller="DemoController">
 
 <div>
-    <div>
+    <div ng-controller="DialogController">
         <md-button ng-click="onAlert($event)">alert</md-button>
         <md-button ng-click="onConfirm($event)">confirm</md-button>
         <md-button ng-click="onToast()">toast</md-button>
         <md-button ng-click="onProgressStart()">progress start</md-button>
         <md-button ng-click="onProgressDone()">progress done</md-button>
     </div>
+
+    <div ng-controller="GridController">
+        <div zl-grid config="gridData"></div>
+    </div>
+
     <!--<div ng-controller="DemoSubController">-->
         <!--<div layout="row">-->
             <!--<div flex region-pick-directive="province" ng-model="province"></div>-->

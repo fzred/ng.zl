@@ -17,7 +17,7 @@
             <td ng-repeat="col in config.columns">
                 <span ng-if="!col.edit" ng-bind="data[col.field]" style="{{col.style}}"></span>
                 <div ng-if="col.edit">
-                    <div grid-edit-directive grid-model="data[col.field]" grid-after-edit="onAfterEdit(value, col, data)"></div>
+                    <div zl-grid-edit grid-model="data[col.field]" grid-after-edit="onAfterEdit(value, col, data)"></div>
                 </div>
             </td>
 

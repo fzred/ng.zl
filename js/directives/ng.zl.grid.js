@@ -1,4 +1,4 @@
-angular.module('ng.zl.grid', ['ng.zl', 'ng.zl.grid.edit']).directive('zlGrid', function ($zl) {
+angular.module('ng.zl.grid', ['ng.zl']).directive('zlGrid', function ($zl) {
     'use strict';
 
     return {
@@ -69,9 +69,7 @@ angular.module('ng.zl.grid', ['ng.zl', 'ng.zl.grid.edit']).directive('zlGrid', f
             $scope.getData();
         }
     };
-});
-
-angular.module('ng.zl.grid.edit', []).directive('zlGridEdit', function (FocusOnService) {
+}).directive('zlGridEdit', function (FocusOnService) {
     'use strict';
 
     return {
