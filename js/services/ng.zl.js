@@ -1,4 +1,4 @@
-angular.module('ng.zl', ['ng', 'ngMaterial', 'ng.zl.sha256', 'ng.zl.templates']).factory('ZLService', function ($mdDialog, $mdToast, $compile, $rootScope, $templateRequest, $timeout, Sha256Service) {
+angular.module('ng.zl', ['ng', 'ngMaterial', 'ng.zl.sha256', 'ng.zl.templates']).factory('ZLService', function ($mdDialog, $mdToast, $compile, $rootScope, $templateRequest, $timeout, Sha256Service, $q) {
     'use strict';
 
     var $container = $(document.body);
@@ -24,6 +24,7 @@ angular.module('ng.zl', ['ng', 'ngMaterial', 'ng.zl.sha256', 'ng.zl.templates'])
     var _toastScope = $rootScope.$new();
     _toastScope.list = [];
     var toast = function (word, type, time) {
+        var def = $q.defer();
 
         if (!_$toast) {
             _$toast = true;
@@ -33,15 +34,16 @@ angular.module('ng.zl', ['ng', 'ngMaterial', 'ng.zl.sha256', 'ng.zl.templates'])
                 $compile(_$toast)(_toastScope);
             });
         }
-        var t = {word: word};
-        _toastScope.list.push({word: word});
+        var key = +new Date();
+        _toastScope.list.unshift({word: word, _key_: key});
         $timeout(function () {
-            _toastScope.list.splice(_toastScope.list.indexOf(t), 1);
+            _toastScope.list.splice(_toastScope.list.indexOf(_.find(_toastScope.list, function (value) {
+                return value._key_ === key;
+            })), 1);
+            def.resolve({});
         }, time || 4000);
 
-
-        //var d = $mdToast.simple().content(word).position('right top').hideDelay(time || 3000).parent(_$toast);
-        //return $mdToast.show(d);
+        return def.promise;
     };
 
     var _$progress = null;

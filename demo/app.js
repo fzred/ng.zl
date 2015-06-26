@@ -16,8 +16,10 @@ angular.module('myApp', ['ng.zl']).controller('DemoController', function ($scope
         });
     };
 
+    var num = 1;
     $scope.onToast = function () {
-        ZLService.tips('1111').then(function () {
+        num ++;
+        ZLService.tips('1111 ' + num).then(function () {
             window.console.log('after toast');
         });
     };
