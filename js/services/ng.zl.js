@@ -1,4 +1,4 @@
-angular.module('ng.zl', ['ng', 'ngMaterial', 'ng.zl.sha256', 'ng.zl.templates']).factory('$zl', function ($mdDialog, $mdToast, $compile, $rootScope, $templateRequest, $timeout, $zlSha256, $q) {
+angular.module('ng.zl').factory('$zl', function ($mdDialog, $mdToast, $compile, $rootScope, $templateRequest, $timeout, $zlSha256, $q) {
     'use strict';
 
     var $container = $(document.body);

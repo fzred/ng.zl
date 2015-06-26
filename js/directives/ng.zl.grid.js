@@ -69,7 +69,7 @@ angular.module('ng.zl.grid', ['ng.zl']).directive('zlGrid', function ($zl) {
             $scope.getData();
         }
     };
-}).directive('zlGridEdit', function (FocusOnService) {
+}).directive('zlGridEdit', function ($zlFocusOn) {
     'use strict';
 
     return {
@@ -93,7 +93,7 @@ angular.module('ng.zl.grid', ['ng.zl']).directive('zlGrid', function ($zl) {
             $scope.onEdit = function (event) {
                 $element.addClass('zl-grid-edit-on');
                 $scope.edit = true;
-                FocusOnService('zlGridEditInput');
+                $zlFocusOn('zlGridEditInput');
             };
 
             $scope.cancelEdit = function () {

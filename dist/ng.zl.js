@@ -1,7 +1,18 @@
-angular.module("ng.zl.templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("views/grid.edit.html","<div class=\"zl-grid-edit\" ng-dblclick=\"onEdit($event)\">\r\n    <span ng-bind=\"gridModel\" ng-show=\"!edit\"></span>\r\n    <input type=\"text\" tabindex=\"-1\" ng-model=\"gridModel\" ng-show=\"edit\" ng-blur=\"cancelEdit()\" ng-keyup=\"onEnter($event)\" focus-on-directive=\"zlGridEditInput\"/>\r\n</div>");
+angular.module('ng.zl', ['ng', 'ngMaterial','ng.zl.sha256', 'ng.zl.templates']);
+angular.module("ng.zl.templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("views/grid.edit.html","<div class=\"zl-grid-edit\" ng-dblclick=\"onEdit($event)\">\r\n    <span ng-bind=\"gridModel\" ng-show=\"!edit\"></span>\r\n    <input type=\"text\" tabindex=\"-1\" ng-model=\"gridModel\" ng-show=\"edit\" ng-blur=\"cancelEdit()\" ng-keyup=\"onEnter($event)\" zl-focus-on=\"zlGridEditInput\"/>\r\n</div>");
 $templateCache.put("views/grid.html","<div class=\"zl-grid\">\r\n    <table class=\"table table-striped table-hover table-condensed\">\r\n        <thead>\r\n        <tr>\r\n            <th ng-if=\"config.enableSelect\" class=\"zl-grid-select\">\r\n                <md-checkbox ng-click=\"onCheckAll($event)\"></md-checkbox>\r\n            </th>\r\n            <th ng-repeat=\"col in config.columns\" ng-bind=\"col.name\"></th>\r\n            <th ng-if=\"config.actions.length > 0\">操作</th>\r\n        </tr>\r\n        </thead>\r\n        <tbody>\r\n        <tr ng-repeat=\"data in config.data\">\r\n            <td ng-if=\"config.enableSelect\" class=\"zl-grid-select\">\r\n                <md-checkbox ng-model=\"data._checked\"></md-checkbox>\r\n            </td>\r\n            <td ng-repeat=\"col in config.columns\">\r\n                <span ng-if=\"!col.edit\" ng-bind=\"data[col.field]\" style=\"{{col.style}}\"></span>\r\n                <div ng-if=\"col.edit\">\r\n                    <div zl-grid-edit grid-model=\"data[col.field]\" grid-after-edit=\"onAfterEdit(value, col, data)\"></div>\r\n                </div>\r\n            </td>\r\n\r\n            <td ng-if=\"config.actions.length > 0\">\r\n                <md-button ng-repeat=\"act in config.actions\" class=\"md-raised {{act.className}}\" ng-bind=\"act.html\"\r\n                           ng-click=\"act.action(data, config.data, $event)\"></md-button>\r\n            </td>\r\n        </tr>\r\n        </tbody>\r\n    </table>\r\n    <div layout=\"row\">\r\n        <md-button class=\"md-raised\" ng-click=\"getData()\" ng-if=\"config.next\">More</md-button>\r\n        <md-button class=\"md-raised\" ng-if=\"!config.next\" ng-disabled=\"true\">No More</md-button>\r\n        <div flex ng-if=\"config.enableSelect && config.actions.length > 0\">\r\n            <md-button ng-repeat=\"act in config.actions\" class=\"md-raised {{act.className}}\" ng-bind=\"act.html\"\r\n                       ng-click=\"onBatch(act, $event)\"></md-button>\r\n        </div>\r\n    </div>\r\n</div>");
 $templateCache.put("views/progress.html","<div class=\"zl-progress\" ng-if=\"show\">\r\n    <md-progress-circular md-mode=\"indeterminate\"></md-progress-circular>\r\n</div>");
 $templateCache.put("views/toast.html","<div class=\"zl-toast-container\">\r\n    <md-toast ng-repeat=\"t in list\" class=\"md-default-theme\">\r\n        <span ng-bind=\"t.word\"></span>\r\n    </md-toast>\r\n</div>");}]);
+angular.module('ng.zl').directive('zlFocusOn', function () {
+    'use strict';
+    return function (scope, elem, attr) {
+        return scope.$on('zlFocusOn', function (e, name) {
+            if (name === attr.zlFocusOn) {
+                return elem[0].focus();
+            }
+        });
+    };
+});
 angular.module('ng.zl.grid', ['ng.zl']).directive('zlGrid', ["$zl", function ($zl) {
     'use strict';
 
@@ -73,7 +84,7 @@ angular.module('ng.zl.grid', ['ng.zl']).directive('zlGrid', ["$zl", function ($z
             $scope.getData();
         }]
     };
-}]).directive('zlGridEdit', ["FocusOnService", function (FocusOnService) {
+}]).directive('zlGridEdit', ["$zlFocusOn", function ($zlFocusOn) {
     'use strict';
 
     return {
@@ -97,7 +108,7 @@ angular.module('ng.zl.grid', ['ng.zl']).directive('zlGrid', ["$zl", function ($z
             $scope.onEdit = function (event) {
                 $element.addClass('zl-grid-edit-on');
                 $scope.edit = true;
-                FocusOnService('zlGridEditInput');
+                $zlFocusOn('zlGridEditInput');
             };
 
             $scope.cancelEdit = function () {
@@ -122,7 +133,15 @@ angular.module('ng.zl.grid', ['ng.zl']).directive('zlGrid', ["$zl", function ($z
         }]
     };
 }]);
-angular.module('ng.zl', ['ng', 'ngMaterial', 'ng.zl.sha256', 'ng.zl.templates']).factory('$zl', ["$mdDialog", "$mdToast", "$compile", "$rootScope", "$templateRequest", "$timeout", "$zlSha256", "$q", function ($mdDialog, $mdToast, $compile, $rootScope, $templateRequest, $timeout, $zlSha256, $q) {
+angular.module('ng.zl').factory('$zlFocusOn', ["$rootScope", "$timeout", function ($rootScope, $timeout) {
+    'use strict';
+    return function (name) {
+        return $timeout(function () {
+            return $rootScope.$broadcast('zlFocusOn', name);
+        });
+    };
+}]);
+angular.module('ng.zl').factory('$zl', ["$mdDialog", "$mdToast", "$compile", "$rootScope", "$templateRequest", "$timeout", "$zlSha256", "$q", function ($mdDialog, $mdToast, $compile, $rootScope, $templateRequest, $timeout, $zlSha256, $q) {
     'use strict';
 
     var $container = $(document.body);

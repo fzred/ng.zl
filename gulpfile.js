@@ -26,7 +26,7 @@
     });
 
     gulp.task('annotate', function () {
-        return gulp.src('js/**/*.js')
+        return gulp.src(['js/*.js','js/**/*.js'])
             .pipe(ngAnnotate())
             .pipe(gulp.dest('dist/js'));
     });
@@ -43,7 +43,7 @@
     });
 
     gulp.task('concat', function () {
-        return gulp.src(['dist/js/**/*.js', 'dist/js/*.js'])
+        return gulp.src(['dist/js/*.js', 'dist/js/**/*.js' ])
             .pipe(concat('ng.zl.js'))
             .pipe(gulp.dest('dist'));
 
