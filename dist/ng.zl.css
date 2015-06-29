@@ -40,7 +40,6 @@
 }
 
 .zl-grid{
-    height: 500px;
     min-width: 400px;
 }
 .zl-grid .table .md-button{
@@ -66,7 +65,13 @@
 .zl-grid .zl-grid-edit.zl-grid-edit-on input{
     display: inline-block;
 }
-
+.zl-grid .zl-grid-edit select{
+    width: 100%;
+    display: none;
+}
+.zl-grid .zl-grid-edit.zl-grid-edit-on select{
+    display: inline-block;
+}
 
 
 .zl-scroll{

@@ -7,7 +7,7 @@ angular.module('ng.zl').directive('zlScroll', function ($zl, $mdMedia) {
         templateUrl: 'views/scroll.html',
         controller: function ($scope, $element) {
 
-            var params = $element.attr('scroll-directive');
+            var params = $element.attr('zl-scroll');
             if (params.indexOf('scroll-top') > -1) {
                 $scope.top = true;
             }

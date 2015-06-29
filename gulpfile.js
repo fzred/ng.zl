@@ -16,7 +16,7 @@
     // 因为生产出来的对这个moduleName 就有依赖性。故会覆盖之前的module。 所以不能用ng.zl。
     var moduleName = 'ng.zl.templates';
 
-    gulp.task('default', function () {
+    gulp.task('default', ['release', 'demo'], function () {
 
     });
 

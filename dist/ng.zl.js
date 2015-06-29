@@ -1,7 +1,9 @@
 angular.module('ng.zl', ['ng', 'ngSanitize','ngMaterial','ng.zl.sha256', 'ng.zl.templates']);
-angular.module("ng.zl.templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("views/grid.edit.html","<div class=\"zl-grid-edit\" ng-dblclick=\"onEdit($event)\">\r\n    <span ng-bind=\"gridModel\" ng-show=\"!edit\"></span>\r\n    <input type=\"text\" tabindex=\"-1\" ng-model=\"gridModel\" ng-show=\"edit\" ng-blur=\"cancelEdit()\" ng-keyup=\"onEnter($event)\" zl-focus-on=\"zlGridEditInput\"/>\r\n</div>");
-$templateCache.put("views/grid.html","<div class=\"zl-grid\">\r\n    <table class=\"table table-striped table-hover table-condensed\">\r\n        <thead>\r\n        <tr>\r\n            <th ng-if=\"config.enableSelect\" class=\"zl-grid-select\">\r\n                <md-checkbox ng-click=\"onCheckAll($event)\"></md-checkbox>\r\n            </th>\r\n            <th ng-repeat=\"col in config.columns\" ng-bind=\"col.name\"></th>\r\n            <th ng-if=\"config.actions.length > 0\">操作</th>\r\n        </tr>\r\n        </thead>\r\n        <tbody>\r\n        <tr ng-repeat=\"data in config.data\">\r\n            <td ng-if=\"config.enableSelect\" class=\"zl-grid-select\">\r\n                <md-checkbox ng-model=\"data._checked\"></md-checkbox>\r\n            </td>\r\n            <td ng-repeat=\"col in config.columns\">\r\n                <span ng-if=\"!col.edit && col.render\" ng-bind-html=\"col.render(data[col.field])\" style=\"{{col.style}}\"></span>\r\n                <span ng-if=\"!col.edit && !col.render\" ng-bind=\"data[col.field]\" style=\"{{col.style}}\"></span>\r\n                <div ng-if=\"col.edit\">\r\n                    <div zl-grid-edit grid-model=\"data[col.field]\" grid-after-edit=\"onAfterEdit(value, col, data)\"></div>\r\n                </div>\r\n            </td>\r\n\r\n            <td ng-if=\"config.actions.length > 0\">\r\n                <md-button ng-repeat=\"act in config.actions\" class=\"md-raised {{act.className}}\" ng-bind=\"act.html\"\r\n                           ng-click=\"act.action(data, config.data, $event)\"></md-button>\r\n            </td>\r\n        </tr>\r\n        </tbody>\r\n    </table>\r\n    <div layout=\"row\">\r\n        <md-button class=\"md-raised\" ng-click=\"getData()\" ng-if=\"config.next\">More</md-button>\r\n        <md-button class=\"md-raised\" ng-if=\"!config.next\" ng-disabled=\"true\">No More</md-button>\r\n        <div flex ng-if=\"config.enableSelect && config.actions.length > 0\">\r\n            <md-button ng-repeat=\"act in config.actions\" class=\"md-raised {{act.className}}\" ng-bind=\"act.html\"\r\n                       ng-click=\"onBatch(act, $event)\"></md-button>\r\n        </div>\r\n    </div>\r\n</div>");
+angular.module("ng.zl.templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("views/grid.edit.html","<div class=\"zl-grid-edit\" ng-dblclick=\"onEdit($event)\">\r\n    <span ng-bind=\"gridModel\" ng-show=\"!edit\"></span>\r\n    <input type=\"text\" tabindex=\"-1\" ng-model=\"gridModel\" ng-show=\"edit\" ng-blur=\"cancelEdit($event)\" ng-keyup=\"onEnter($event)\" zl-focus-on=\"zlGridEditInput\"/>\r\n</div>");
+$templateCache.put("views/grid.edit.select.html","<div class=\"zl-grid-edit\" ng-dblclick=\"onEdit($event)\">\r\n    <span ng-bind=\"gridModel\" ng-show=\"!edit\"></span>\r\n    <select tabindex=\"-1\" ng-model=\"selected\" ng-show=\"edit\" ng-blur=\"cancelEdit($event)\" ng-options=\"value.name for value in selects\" ng-change=\"onChange($event)\">\r\n    </select>\r\n</div>");
+$templateCache.put("views/grid.html","<div class=\"zl-grid\">\r\n    <table class=\"table table-striped table-hover table-condensed\">\r\n        <thead>\r\n        <tr>\r\n            <th ng-if=\"config.enableSelect\" class=\"zl-grid-select\">\r\n                <md-checkbox ng-click=\"onCheckAll($event)\"></md-checkbox>\r\n            </th>\r\n            <th ng-repeat=\"col in config.columns\" ng-bind=\"col.name\"></th>\r\n            <th ng-if=\"config.actions.length > 0\">操作</th>\r\n        </tr>\r\n        </thead>\r\n        <tbody>\r\n        <tr ng-repeat=\"data in config.data\">\r\n            <td ng-if=\"config.enableSelect\" class=\"zl-grid-select\">\r\n                <md-checkbox ng-model=\"data._checked\"></md-checkbox>\r\n            </td>\r\n            <td ng-repeat=\"col in config.columns\">\r\n                <span ng-if=\"!col.edit && col.render\" ng-bind-html=\"col.render(data[col.field])\" style=\"{{col.style}}\"></span>\r\n                <span ng-if=\"!col.edit && !col.render\" ng-bind=\"data[col.field]\" style=\"{{col.style}}\"></span>\r\n\r\n                <div ng-if=\"col.edit && col.editType === \'input\'\">\r\n                    <div zl-grid-edit grid-model=\"data[col.field]\" grid-after-edit=\"onAfterEdit(value, col, data)\"></div>\r\n                </div>\r\n                <div ng-if=\"col.edit && col.editType === \'select\'\">\r\n                    <div zl-grid-edit-select grid-model=\"data[col.field]\" grid-edit-type=\"col.editType\" grid-edit-data=\"col.editData()\" grid-after-edit=\"onAfterEdit(value, col, data)\"></div>\r\n                </div>\r\n            </td>\r\n\r\n            <td ng-if=\"config.actions.length > 0\">\r\n                <md-button ng-repeat=\"act in config.actions\" class=\"md-raised {{act.className}}\" ng-bind=\"act.html\"\r\n                           ng-click=\"act.action(data, config.data, $event)\"></md-button>\r\n            </td>\r\n        </tr>\r\n        </tbody>\r\n    </table>\r\n    <div layout=\"row\">\r\n        <md-button class=\"md-raised\" ng-click=\"getData()\" ng-if=\"config.next\">More</md-button>\r\n        <md-button class=\"md-raised\" ng-if=\"!config.next\" ng-disabled=\"true\">No More</md-button>\r\n        <div flex ng-if=\"config.enableSelect && config.actions.length > 0\">\r\n            <md-button ng-repeat=\"act in config.actions\" class=\"md-raised {{act.className}}\" ng-bind=\"act.html\"\r\n                       ng-click=\"onBatch(act, $event)\"></md-button>\r\n        </div>\r\n    </div>\r\n</div>");
 $templateCache.put("views/progress.html","<div class=\"zl-progress\" ng-if=\"show\">\r\n    <md-progress-circular md-mode=\"indeterminate\"></md-progress-circular>\r\n</div>");
+$templateCache.put("views/scroll.html","<div class=\"zl-scroll\">\r\n    <div ng-show=\"isShow\">\r\n    <md-button class=\"md-fab md-primary md-mini\" ng-click=\"onTop()\" ng-if=\"top\">\r\n        t\r\n    </md-button>\r\n\r\n    <md-button class=\"md-fab md-primary md-mini\" ng-click=\"onBottom()\" ng-if=\"bottom\">\r\n        b\r\n    </md-button>\r\n    </div>\r\n</div>");
 $templateCache.put("views/toast.html","<div class=\"zl-toast-container\">\r\n    <md-toast ng-repeat=\"t in list\" class=\"md-default-theme\">\r\n        <span ng-bind=\"t.word\"></span>\r\n    </md-toast>\r\n</div>");}]);
 angular.module('ng.zl').directive('zlFocusOn', function () {
     'use strict';
@@ -59,7 +61,7 @@ angular.module('ng.zl.grid', ['ng.zl']).directive('zlGrid', ["$zl", function ($z
             $scope.onAfterEdit = function (value, col, data) {
                 if (value.newValue !== value.oldValue) {
                     var promise = col.afterEdit(data, col, value.newValue, value.oldValue);
-                    if(promise){
+                    if (promise) {
                         promise.then(function () {
                             $zl.tips('修改成功');
                         }, function () {
@@ -68,6 +70,10 @@ angular.module('ng.zl.grid', ['ng.zl']).directive('zlGrid', ["$zl", function ($z
                         });
                     }
                 }
+            };
+
+            $scope.onEditData = function (col) {
+                return col.editData();
             };
 
             $scope.getData = function () {
@@ -84,7 +90,7 @@ angular.module('ng.zl.grid', ['ng.zl']).directive('zlGrid', ["$zl", function ($z
             $scope.getData();
         }]
     };
-}]).directive('zlGridEdit', ["$zlFocusOn", function ($zlFocusOn) {
+}]).directive('zlGridEdit', ["$zlFocusOn", "$timeout", function ($zlFocusOn, $timeout) {
     'use strict';
 
     return {
@@ -111,25 +117,115 @@ angular.module('ng.zl.grid', ['ng.zl']).directive('zlGrid', ["$zl", function ($z
                 $zlFocusOn('zlGridEditInput');
             };
 
-            $scope.cancelEdit = function () {
+            $scope.cancelEdit = function ($event) {
                 $scope.edit = false;
-                $scope.gridModel = oldValue;
             };
 
             $scope.onEnter = function (event) {
                 if (event.keyCode === 13) {
                     $scope.edit = false;
+                    // 避免因为模型没有更新，导致数据不正确。故timeout
+                    $scope.gridModel = event.target.value;
+                    $timeout(function () {
+                        $scope.gridAfterEdit({
+                            value: {
+                                newValue: $scope.gridModel,
+                                oldValue: oldValue
+                            }
+                        });
+                    }, 1);
+                } else if (event.keyCode === 27) {
+                    $scope.edit = false;
+                    $scope.gridModel = oldValue;
+                }
+            };
+        }]
+    };
+}]).directive('zlGridEditSelect', ["$zlFocusOn", "$timeout", function ($zlFocusOn, $timeout) {
+    'use strict';
+
+    return {
+        restrict: 'A',
+        replace: true,
+        scope: {
+            gridModel: '=',
+            gridAfterEdit: '&',
+            gridEditType: '@',
+            gridEditData: '&'
+        },
+        templateUrl: 'views/grid.edit.select.html',
+        controller: ["$scope", "$element", function ($scope, $element) {
+            $scope.edit = false;
+
+            var oldValue = $scope.gridModel;
+
+            $scope.selects = [];
+            $scope.selected = null;
+            $scope.gridEditData().then(function (data) {
+                $scope.selects = data;
+                $scope.selected = _.find(data, function (value) {
+                    return value.value === $scope.gridModel;
+                });
+            });
+
+            // 这里很纠结 如果采用ng-show 的方式,则计算width不准确。因为一开始input显示出来占地方。
+            // 如果采用ng-if的话，导致模型更新不及时。 gridModel 还是旧数据
+            // and  模型的更新还是挺重要的。 所以采用ng-show 方案。 至于计算宽度问题，一开始把input display:none 掉就好了。 哈哈
+            $element.closest('td').width($element.width());
+
+            $scope.onEdit = function (event) {
+                $element.addClass('zl-grid-edit-on');
+                $scope.edit = true;
+                $zlFocusOn('zlGridEditInput');
+            };
+
+            $scope.cancelEdit = function () {
+                //$scope.edit = false;
+                //$scope.gridModel = oldValue;
+            };
+
+            $scope.onChange = function (event) {
+                $scope.edit = false;
+                $scope.gridModel = $scope.selected.value;
+                // 避免因为模型没有更新，导致数据不正确。故timeout
+                $timeout(function () {
                     $scope.gridAfterEdit({
                         value: {
                             newValue: $scope.gridModel,
                             oldValue: oldValue
                         }
                     });
-                }else if(event.keyCode === 27){
-                    $scope.edit = false;
-                    $scope.gridModel = oldValue;
-                }
+                }, 1);
             };
+        }]
+    };
+}]);
+angular.module('ng.zl').directive('zlScroll', ["$zl", "$mdMedia", function ($zl, $mdMedia) {
+    'use strict';
+    return {
+        restrict: 'A',
+        replace: true,
+        scope: {},
+        templateUrl: 'views/scroll.html',
+        controller: ["$scope", "$element", function ($scope, $element) {
+
+            var params = $element.attr('scroll-directive');
+            if (params.indexOf('scroll-top') > -1) {
+                $scope.top = true;
+            }
+            if (params.indexOf('scroll-bottom') > -1) {
+                $scope.bottom = true;
+            }
+
+            $scope.onTop = function () {
+                $zl.scroll.top();
+            };
+
+            $scope.onBottom = function () {
+                $zl.scroll.bottom();
+            };
+
+            $scope.isShow = $mdMedia('gt-md');
         }]
     };
 }]);
