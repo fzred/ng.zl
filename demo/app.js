@@ -37,6 +37,7 @@ angular.module('myApp', ['ng.zl', 'ng.zl.grid']).controller('DemoController', fu
     'use strict';
 
     $scope.gridData = {
+        enableSelect: true,
         columns: [
             {field: 'id', name: 'id', render: renderId},
             {field: 'name', name: '名字', edit: true, editType: 'input', afterEdit: afterEdit},
