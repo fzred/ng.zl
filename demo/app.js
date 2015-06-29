@@ -55,8 +55,8 @@ angular.module('myApp', ['ng.zl', 'ng.zl.grid']).controller('DemoController', fu
         return $zl.format('<a>{value}</a>', {value: value});
     }
 
-    function afterEdit() {
-
+    function afterEdit(data) {
+        console.log(data);
     }
 
     function onDel() {
