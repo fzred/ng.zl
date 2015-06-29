@@ -17,8 +17,12 @@
             <td ng-repeat="col in config.columns">
                 <span ng-if="!col.edit && col.render" ng-bind-html="col.render(data[col.field])" style="{{col.style}}"></span>
                 <span ng-if="!col.edit && !col.render" ng-bind="data[col.field]" style="{{col.style}}"></span>
-                <div ng-if="col.edit">
+
+                <div ng-if="col.edit && col.editType === 'input'">
                     <div zl-grid-edit grid-model="data[col.field]" grid-after-edit="onAfterEdit(value, col, data)"></div>
+                </div>
+                <div ng-if="col.edit && col.editType === 'select'">
+                    <div zl-grid-edit-select grid-model="data[col.field]" grid-edit-type="col.editType" grid-edit-data="col.editData()" grid-after-edit="onAfterEdit(value, col, data)"></div>
                 </div>
             </td>
 

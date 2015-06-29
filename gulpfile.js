@@ -79,7 +79,7 @@
         del(['dist/js']);
     });
 
-    gulp.task('demo', ['demo-templates'], function () {
+    gulp.task('demo', ['demo-templates', 'demo-templates-watch'], function () {
         var target = gulp.src('demo/index.html');
         var sources = gulp.src([
             'bower_components/fontawesome/css/font-awesome.css',
@@ -120,6 +120,10 @@
                 }
             }))
             .pipe(gulp.dest('demo'));
+    });
+
+    gulp.task('demo-templates-watch', function () {
+        return gulp.watch('views/*.html', ['demo-templates']);
     });
 
 })();

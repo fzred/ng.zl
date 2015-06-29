@@ -39,7 +39,8 @@ angular.module('myApp', ['ng.zl', 'ng.zl.grid']).controller('DemoController', fu
     $scope.gridData = {
         columns: [
             {field: 'id', name: 'id', render: renderId},
-            {field: 'name', name: '名字', edit: true, afterEdit: afterEdit}
+            {field: 'name', name: '名字', edit: true, editType: 'input', afterEdit: afterEdit},
+            {field: 'gender', name: '性别', edit: true, editType: 'select', editData: editData, afterEdit: afterEditGender}
         ],
         actions: [{
             type: 'btn',
@@ -51,12 +52,41 @@ angular.module('myApp', ['ng.zl', 'ng.zl.grid']).controller('DemoController', fu
         }
     };
 
-    function renderId(value){
+    $scope.editData = editData;
+    $scope.select = null;
+
+    function editData() {
+        var def = $q.defer();
+        def.resolve([{
+            value: 1,
+            name: '男'
+        }, {
+            value: 2,
+            name: '女'
+        }]);
+        return def.promise;
+        //return [{
+        //    value: 1,
+        //    name: '男'
+        //}, {
+        //    value: 2,
+        //    name: '女'
+        //}];
+    }
+
+    function renderId(value) {
         return $zl.format('<a>{value}</a>', {value: value});
+    }
+
+    function afterEditGender(data){
+        console.log(data);
     }
 
     function afterEdit(data) {
         console.log(data);
+        var def = $q.defer();
+        def.resolve();
+        return def.promise;
     }
 
     function onDel() {
@@ -69,25 +99,20 @@ angular.module('myApp', ['ng.zl', 'ng.zl.grid']).controller('DemoController', fu
         def.resolve({
             values: [{
                 id: 1,
-                name: '1123'
+                name: '1123',
+                gender: 1
             }, {
                 id: 1,
-                name: 'haha'
+                name: 'haha',
+                gender: 1
             }, {
                 id: 1,
-                name: 'haha'
+                name: 'haha',
+                gender: 1
             }, {
                 id: 1,
-                name: 'haha'
-            }, {
-                id: 1,
-                name: 'haha'
-            }, {
-                id: 1,
-                name: 'haha'
-            }, {
-                id: 1,
-                name: 'haha'
+                name: 'haha',
+                gender: 1
             }]
         });
         return def.promise;
