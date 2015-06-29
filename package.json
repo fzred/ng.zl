@@ -1,6 +1,6 @@
 {
-  "name": "ng-zl",
-  "version": "0.2.0",
+  "name": "ng.zl",
+  "version": "0.3.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/zlfe/ng-zl.git"
+    "url": "https://github.com/zlfe/ng.zl.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/zlfe/ng-zl/issues"
+    "url": "https://github.com/zlfe/ng.zl/issues"
   },
-  "homepage": "https://github.com/zlfe/ng-zl",
+  "homepage": "https://github.com/zlfe/ng.zl",
   "devDependencies": {
     "del": "^1.2.0",
     "gulp": "^3.9.0",
