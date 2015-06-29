@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
-    <link rel="stylesheet" href="../bower_components/fontawesome/css/font-awesome.min.css">
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../bower_components/fontawesome/css/font-awesome.css">
     <link rel="stylesheet" href="../bower_components/angular-material/angular-material.css">
-    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
-
-    <link rel="stylesheet" href="../dist/ng.zl.css"/>
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../css/ng.zl.css">
+    <!-- endinject -->
 </head>
 <body ng-controller="DemoController">
 
@@ -52,16 +53,22 @@
 </div>
 
 <!-- inject:js -->
-<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/jquery/dist/jquery.js"></script>
 <script src="../bower_components/underscore/underscore-min.js"></script>
 <script src="../bower_components/angular/angular.js"></script>
-<script src="../bower_components/angular-sanitize/angular-sanitize.min.js"></script>
-<script src="../bower_components/angular-animate/angular-animate.min.js"></script>
-<script src="../bower_components/angular-aria/angular-aria.min.js"></script>
-<script src="../bower_components/angular-material/angular-material.min.js"></script>
-
-<script src="../dist/ng.zl.js"></script>
-
+<script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="../bower_components/angular-animate/angular-animate.js"></script>
+<script src="../bower_components/angular-aria/angular-aria.js"></script>
+<script src="../bower_components/angular-material/angular-material.js"></script>
+<script src="../js/module.js"></script>
+<script src="../js/directives/ng.zl.focus.on.js"></script>
+<script src="../js/directives/ng.zl.grid.js"></script>
+<script src="../js/services/ng.zl.focus.on.js"></script>
+<script src="../js/services/ng.zl.js"></script>
+<script src="../js/services/ng.zl.sha256.js"></script>
+<script src="templates.min.js"></script>
 <script src="app.js"></script>
+<!-- endinject -->
+
 </body>
 </html>

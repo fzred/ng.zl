@@ -33,12 +33,12 @@ angular.module('myApp', ['ng.zl', 'ng.zl.grid']).controller('DemoController', fu
     $scope.onProgressDone = function () {
         $zl.progress.done();
     };
-}).controller('GridController', function ($scope, $q) {
+}).controller('GridController', function ($scope, $q, $zl) {
     'use strict';
 
     $scope.gridData = {
         columns: [
-            {field: 'id', name: 'id'},
+            {field: 'id', name: 'id', render: renderId},
             {field: 'name', name: '名字', edit: true, afterEdit: afterEdit}
         ],
         actions: [{
@@ -50,6 +50,10 @@ angular.module('myApp', ['ng.zl', 'ng.zl.grid']).controller('DemoController', fu
             return getData();
         }
     };
+
+    function renderId(value){
+        return $zl.format('<a>{value}</a>', {value: value});
+    }
 
     function afterEdit() {
 
@@ -65,7 +69,7 @@ angular.module('myApp', ['ng.zl', 'ng.zl.grid']).controller('DemoController', fu
         def.resolve({
             values: [{
                 id: 1,
-                name: 'haha'
+                name: '1123'
             }, {
                 id: 1,
                 name: 'haha'

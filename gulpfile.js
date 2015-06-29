@@ -11,6 +11,8 @@
     var del = require('del');
     var rename = require('gulp-rename');
 
+    var inject = require('gulp-inject');
+
     var moduleName = 'ng.zl.templates';
 
     gulp.task('default', function () {
@@ -74,6 +76,49 @@
 
     gulp.task('clean.after', function () {
         del(['dist/js']);
+    });
+
+    gulp.task('demo', ['demo-templates'], function () {
+        var target = gulp.src('demo/index.html');
+        var sources = gulp.src([
+            'bower_components/fontawesome/css/font-awesome.css',
+            'bower_components/angular-material/angular-material.css',
+            'bower_components/bootstrap/dist/css/bootstrap.css',
+
+            'css/*.css',
+
+            'bower_components/jquery/dist/jquery.js',
+            'bower_components/underscore/underscore-min.js',
+            'bower_components/angular/angular.js',
+            'bower_components/angular-sanitize/angular-sanitize.js',
+            'bower_components/angular-animate/angular-animate.js',
+            'bower_components/angular-aria/angular-aria.js',
+            'bower_components/angular-material/angular-material.js',
+
+
+            'js/*.js',
+            'js/directives/*.js',
+            'js/filters/*.js',
+            'js/services/*.js',
+            'js/controllers/*.js',
+
+            'demo/templates.min.js',
+
+            'demo/app.js'
+        ], {read: false});
+
+        return target.pipe(inject(sources, {relative: true})).pipe(gulp.dest('demo'));
+    });
+
+    gulp.task('demo-templates', function () {
+        return gulp.src('views/*.html')
+            .pipe(ngTemplates({
+                module: moduleName,
+                path: function (path, base) {
+                    return path.replace(base, 'views\\');
+                }
+            }))
+            .pipe(gulp.dest('demo'));
     });
 
 })();
