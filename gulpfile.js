@@ -62,7 +62,7 @@
     });
 
     gulp.task('copy.css', function () {
-        return gulp.src('css/*.css')
+        return gulp.src(['css/*.css', 'css/*.eot', 'css/*.svg', 'css/*.ttf', 'css/*.woff'])
             .pipe(gulp.dest('dist'));
     });
 
