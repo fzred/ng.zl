@@ -757,10 +757,19 @@ angular.module('ng.zl.uploader', []).service('$zlUploader', ["$log", "$q", funct
 
         return Upload(container, config);
     };
-
+    
+    var imgUpload = function (container, config) {
+        config = $.extend({
+            fileObjName: 'Filename',
+            buttonText: '上传图片',
+            multi: false
+        });
+        return Upload(container, config);
+    };
 
     return {
-        fileUpload: fileUpload
+        fileUpload: fileUpload,
+        imgUpload: imgUpload
     };
 }]);
 /*
