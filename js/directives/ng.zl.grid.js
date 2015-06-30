@@ -3,24 +3,24 @@ angular.module('ng.zl.grid', ['ng.zl']).directive('zlGrid', function ($zl) {
 
     /*支持修改文本和修改select。 改后值为新的，此时会调用afterEdit,返回promise,如果失败会回复原始值*/
     /*$scope.gridData = {
-        enableSelect: true,
-        columns: [
-            {field: 'serialNumber', name: '序号'},
-            {field: 'type', name: '类型', edit: true, editType: 'input', afterEdit: afterEdit},
-            {field: 'gender', name: '性别', edit: true, editType: 'select', editData: getEditData, afterEdit: afterEdit}
-        ],
-        actions: [{
-            type: 'btn',
-            html: '删除',
-            action: onDel,
-            batch: onDels
-        }],
-        // 需要返回这种格式 { xxxx: datas, nextPageOffset: x}, 其中 xxxx 是任意，nextPageOffset 也可以是 nextPageAnchor.
-        // 返回next,代表nextPageOffset或者nextPageAnchor的值
-        getData: function (next) {
-            return DataService.getConfigType();
-        }
-    };*/
+     enableSelect: true,
+     columns: [
+     {field: 'serialNumber', name: '序号'},
+     {field: 'type', name: '类型', edit: true, editType: 'input', afterEdit: afterEdit},
+     {field: 'gender', name: '性别', edit: true, editType: 'select', editData: getEditData, afterEdit: afterEdit}
+     ],
+     actions: [{
+     type: 'btn',
+     html: '删除',
+     action: onDel,
+     batch: onDels
+     }],
+     // 需要返回这种格式 { xxxx: datas, nextPageOffset: x}, 其中 xxxx 是任意，nextPageOffset 也可以是 nextPageAnchor.
+     // 返回next,代表nextPageOffset或者nextPageAnchor的值
+     getData: function (next) {
+     return DataService.getConfigType();
+     }
+     };*/
 
     return {
         restrict: 'A',
@@ -121,11 +121,11 @@ angular.module('ng.zl.grid', ['ng.zl']).directive('zlGrid', function ($zl) {
                 $zlFocusOn('zlGridEditInput');
             };
 
-            $scope.cancelEdit = function ($event) {
+            $scope.cancelEdit = function (event) {
                 $scope.edit = false;
             };
 
-            $scope.onEnter = function (event) {
+            $scope.onKey = function (event) {
                 if (event.keyCode === 13) {
                     $scope.edit = false;
                     // 避免因为模型没有更新，导致数据不正确。故timeout
@@ -172,25 +172,78 @@ angular.module('ng.zl.grid', ['ng.zl']).directive('zlGrid', function ($zl) {
                 });
             });
 
-            // 这里很纠结 如果采用ng-show 的方式,则计算width不准确。因为一开始input显示出来占地方。
-            // 如果采用ng-if的话，导致模型更新不及时。 gridModel 还是旧数据
-            // and  模型的更新还是挺重要的。 所以采用ng-show 方案。 至于计算宽度问题，一开始把input display:none 掉就好了。 哈哈
             $element.closest('td').width($element.width());
 
             $scope.onEdit = function (event) {
                 $element.addClass('zl-grid-edit-on');
                 $scope.edit = true;
-                $zlFocusOn('zlGridEditInput');
+                $zlFocusOn('zlGridEditSelect');
             };
 
             $scope.cancelEdit = function () {
-                //$scope.edit = false;
-                //$scope.gridModel = oldValue;
+                $scope.edit = false;
+            };
+
+            $scope.onKey = function () {
+                if (event.keyCode === 27) {
+                    $scope.edit = false;
+                    $scope.gridModel = oldValue;
+                }
             };
 
             $scope.onChange = function (event) {
                 $scope.edit = false;
                 $scope.gridModel = $scope.selected.value;
+                // 避免因为模型没有更新，导致数据不正确。故timeout
+                $timeout(function () {
+                    $scope.gridAfterEdit({
+                        value: {
+                            newValue: $scope.gridModel,
+                            oldValue: oldValue
+                        }
+                    });
+                }, 1);
+            };
+        }
+    };
+}).directive('zlGridEditSwitch', function ($zlFocusOn, $timeout) {
+    'use strict';
+
+    return {
+        restrict: 'A',
+        replace: true,
+        scope: {
+            gridModel: '=',
+            gridAfterEdit: '&'
+        },
+        templateUrl: 'views/grid.edit.switch.html',
+        controller: function ($scope, $element) {
+            $scope.edit = false;
+
+            $scope.gridModel = $scope.gridModel || false;
+            var oldValue = $scope.gridModel;
+
+            $element.closest('td').width($element.width());
+
+            $scope.onEdit = function (event) {
+                $element.addClass('zl-grid-edit-on');
+                $scope.edit = true;
+                $zlFocusOn('zlGridEditSwitch');
+            };
+
+            $scope.cancelEdit = function (event) {
+                $scope.edit = false;
+            };
+
+            $scope.onKey = function (event) {
+                if (event.keyCode === 27) {
+                    $scope.edit = false;
+                    $scope.gridModel = oldValue;
+                }
+            };
+
+            $scope.onChange = function (event) {
+                $scope.edit = false;
                 // 避免因为模型没有更新，导致数据不正确。故timeout
                 $timeout(function () {
                     $scope.gridAfterEdit({

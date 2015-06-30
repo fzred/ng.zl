@@ -15,7 +15,9 @@
                 <md-checkbox ng-model="data._checked"></md-checkbox>
             </td>
             <td ng-repeat="col in config.columns">
-                <span ng-if="!col.edit && col.render" ng-bind-html="col.render(data[col.field])" style="{{col.style}}"></span>
+                <span ng-if="!col.edit && col.render" style="{{col.style}}">
+                    <div zl-compile html="{{col.render(data[col.field])}}"></div>
+                </span>
                 <span ng-if="!col.edit && !col.render" ng-bind="data[col.field]" style="{{col.style}}"></span>
 
                 <div ng-if="col.edit && col.editType === 'input'">
@@ -23,6 +25,9 @@
                 </div>
                 <div ng-if="col.edit && col.editType === 'select'">
                     <div zl-grid-edit-select grid-model="data[col.field]" grid-edit-type="col.editType" grid-edit-data="col.editData()" grid-after-edit="onAfterEdit(value, col, data)"></div>
+                </div>
+                <div ng-if="col.edit && col.editType === 'switch'">
+                    <div zl-grid-edit-switch grid-model="data[col.field]" grid-after-edit="onAfterEdit(value, col, data)"></div>
                 </div>
             </td>
 

@@ -1,5 +1,6 @@
-angular.module('myApp', ['ng.zl', 'ng.zl.grid']).controller('DemoController', function ($scope) {
+angular.module('myApp', ['ng.zl', 'ng.zl.grid']).controller('DemoController', function () {
     'use strict';
+
 }).controller('DialogController', function ($scope, $timeout, $zl) {
 
     'use strict';
@@ -33,16 +34,16 @@ angular.module('myApp', ['ng.zl', 'ng.zl.grid']).controller('DemoController', fu
     $scope.onProgressDone = function () {
         $zl.progress.done();
     };
-}).controller('GridController', function ($scope, $q, $zl, $sce) {
+}).controller('GridController', function ($scope, $q, $zl) {
     'use strict';
 
     $scope.gridData = {
         enableSelect: true,
         columns: [
             {field: 'id', name: 'id', render: renderId},
-            {field: 'id', name: 'id', render: renderId2},
             {field: 'name', name: '名字', edit: true, editType: 'input', afterEdit: afterEdit},
-            {field: 'gender', name: '性别', edit: true, editType: 'select', editData: editData, afterEdit: afterEditGender}
+            {field: 'gender', name: '性别', edit: true, editType: 'select', editData: editData, afterEdit: afterEditGender},
+            {field: 'isOk', name: '是否', edit: true, editType: 'switch', afterEdit: afterEditOk}
         ],
         actions: [{
             type: 'btn',
@@ -80,8 +81,8 @@ angular.module('myApp', ['ng.zl', 'ng.zl.grid']).controller('DemoController', fu
         return $zl.format('<a href="http://www.baidu.com">{value}</a>', {value: value});
     }
 
-    function renderId2(value){
-        return $sce.trustAsHtml('<md-switch class="md-primary" md-no-ink aria-label="Switch No Ink" ng-model="data.cb5">Switch (md-primary): No Ink</md-switch>');
+    function afterEditOk(data){
+        console.log(data);
     }
 
     function afterEditGender(data){
@@ -106,19 +107,23 @@ angular.module('myApp', ['ng.zl', 'ng.zl.grid']).controller('DemoController', fu
             values: [{
                 id: 1,
                 name: '1123',
-                gender: 1
+                gender: 1,
+                isOk: false
             }, {
                 id: 1,
                 name: 'haha',
-                gender: 1
+                gender: 1,
+                isOk: true
             }, {
                 id: 1,
                 name: 'haha',
-                gender: 1
+                gender: 1,
+                isOk: false
             }, {
                 id: 1,
                 name: 'haha',
-                gender: 1
+                gender: 1,
+                isOk: false
             }]
         });
         return def.promise;

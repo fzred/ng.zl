@@ -2,8 +2,8 @@ angular.module('ng.zl').directive('zlCompile', function ($compile) {
     'use strict';
     return {
         replace: true,
-        restrict: 'EA',
-        link: function (scope, elm) {
+        restrict: 'A',
+        link: function (scope, elm, attrs) {
             var DUMMY_SCOPE = {
                     $destroy: angular.noop
                 },
@@ -13,7 +13,7 @@ angular.module('ng.zl').directive('zlCompile', function ($compile) {
                     (childScope || DUMMY_SCOPE).$destroy();
                 };
 
-            iAttrs.$observe('html', function (html) {
+            attrs.$observe('html', function (html) {
                 if (html) {
                     destroyChildScope();
                     childScope = scope.$new(true);
