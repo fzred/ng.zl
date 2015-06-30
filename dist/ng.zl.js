@@ -763,7 +763,7 @@ angular.module('ng.zl.uploader', []).service('$zlUploader', ["$log", "$q", funct
             fileObjName: 'Filename',
             buttonText: '上传图片',
             multi: false
-        });
+        }, config);
         return Upload(container, config);
     };
 
