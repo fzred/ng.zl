@@ -102,8 +102,7 @@ angular.module('ng.zl.grid', ['ng.zl']).directive('zlGrid', function ($zl) {
         replace: true,
         scope: {
             gridModel: '=',
-            gridAfterEdit: '&',
-            gridInputType: '@'
+            gridAfterEdit: '&'
         },
         templateUrl: 'views/grid.edit.html',
         controller: function ($scope, $element) {
