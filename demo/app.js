@@ -1,5 +1,21 @@
-angular.module('myApp', ['ng.zl', 'ng.zl.grid']).controller('DemoController', function () {
+angular.module('myApp', ['ng.zl', 'ng.zl.grid', 'ng.zl.uploader']).controller('DemoController', function ($scope, $zlUploader, $zl) {
     'use strict';
+
+    $zlUploader.imgUpload($('#uploadFile'), {
+        uploadScript: '/admin/address/importAddressInfos',
+        onUploadComplete: function (file, data) {
+            data = angular.fromJson(data);
+            if (data.errorCode === 200) {
+                $scope.$apply(function () {
+                    $zl.tips('上传成功');
+                });
+            } else {
+                $scope.$apply(function () {
+                    $zl.tips(data.errorDescription || '未知错误');
+                });
+            }
+        }
+    });
 
 }).controller('DialogController', function ($scope, $timeout, $zl) {
 

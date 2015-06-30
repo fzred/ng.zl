@@ -96,6 +96,7 @@
             'bower_components/angular-aria/angular-aria.js',
             'bower_components/angular-material/angular-material.js',
 
+            'js/common/uploadifive/jquery.uploadifive.min.js',
 
             'js/*.js',
             'js/directives/*.js',
