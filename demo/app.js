@@ -1,8 +1,5 @@
-angular.module('myApp', ['ng.zl', 'ng.zl.grid']).controller('DemoController', function ($scope) {
+angular.module('myApp', ['ng.zl', 'ng.zl.grid']).controller('DemoController', function () {
     'use strict';
-
-    $scope.name = 'abc';
-    $scope.htmlstr = '<input ng-model="name" />';
 
 }).controller('DialogController', function ($scope, $timeout, $zl) {
 
@@ -37,7 +34,7 @@ angular.module('myApp', ['ng.zl', 'ng.zl.grid']).controller('DemoController', fu
     $scope.onProgressDone = function () {
         $zl.progress.done();
     };
-}).controller('GridController', function ($scope, $q, $zl) {
+}).controller('GridController', function ($scope, $q, $sce) {
     'use strict';
 
     $scope.gridData = {
@@ -81,7 +78,7 @@ angular.module('myApp', ['ng.zl', 'ng.zl.grid']).controller('DemoController', fu
     }
 
     function renderId(value) {
-        return $zl.format('<a href="http://www.baidu.com">{value}</a>', {value: value});
+        return '<input ng-model="data[col.field]" />';
     }
 
     function afterEditOk(data){
