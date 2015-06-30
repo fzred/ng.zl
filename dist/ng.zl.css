@@ -72,6 +72,9 @@
 .zl-grid .zl-grid-edit.zl-grid-edit-on select{
     display: inline-block;
 }
+.zl-grid md-switch{
+    margin: 0;
+}
 
 
 .zl-scroll{

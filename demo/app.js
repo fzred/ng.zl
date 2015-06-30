@@ -41,7 +41,7 @@ angular.module('myApp', ['ng.zl', 'ng.zl.grid']).controller('DemoController', fu
         enableSelect: true,
         columns: [
             {field: 'id', name: 'id', render: renderId},
-            {field: 'name', name: '名字', edit: true, editType: 'input', afterEdit: afterEdit},
+            {field: 'name', name: '名字', edit: true, editType: 'input', editInputType: 'date', afterEdit: afterEdit},
             {field: 'gender', name: '性别', edit: true, editType: 'select', editData: editData, afterEdit: afterEditGender},
             {field: 'isOk', name: '是否', edit: true, editType: 'switch', afterEdit: afterEditOk}
         ],
