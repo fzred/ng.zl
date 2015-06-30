@@ -1,6 +1,27 @@
 angular.module('ng.zl.grid', ['ng.zl']).directive('zlGrid', function ($zl) {
     'use strict';
 
+    /*支持修改文本和修改select。 改后值为新的，此时会调用afterEdit,返回promise,如果失败会回复原始值*/
+    /*$scope.gridData = {
+        enableSelect: true,
+        columns: [
+            {field: 'serialNumber', name: '序号'},
+            {field: 'type', name: '类型', edit: true, editType: 'input', afterEdit: afterEdit},
+            {field: 'gender', name: '性别', edit: true, editType: 'select', editData: getEditData, afterEdit: afterEdit}
+        ],
+        actions: [{
+            type: 'btn',
+            html: '删除',
+            action: onDel,
+            batch: onDels
+        }],
+        // 需要返回这种格式 { xxxx: datas, nextPageOffset: x}, 其中 xxxx 是任意，nextPageOffset 也可以是 nextPageAnchor.
+        // 返回next,代表nextPageOffset或者nextPageAnchor的值
+        getData: function (next) {
+            return DataService.getConfigType();
+        }
+    };*/
+
     return {
         restrict: 'A',
         replace: true,
