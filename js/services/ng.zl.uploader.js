@@ -48,7 +48,7 @@ angular.module('ng.zl.uploader', []).service('$zlUploader', function ($log, $q) 
     
     var imgUpload = function (container, config) {
         config = $.extend({
-            fileObjName: 'Filename',
+            fileObjName: 'resFiles',
             buttonText: '上传图片',
             multi: false
         }, config);
