@@ -83,7 +83,7 @@ angular.module('ng.zl.grid', ['ng.zl']).directive('zlGrid', function ($zl) {
             $scope.getData = function () {
                 $scope.config.getData($scope.config.next).then(function (data) {
                     _.each(data, function (value, key) {
-                        if (key !== 'pageOffset' && key !== 'pageAnchor') {
+                        if (key !== 'nextPageOffset' && key !== 'nextPageAnchor') {
                             $scope.config.data = $scope.config.data.concat(value || []);
                         }
                     });
