@@ -19,6 +19,37 @@ angular.module('ng.zl').factory('$zl', function ($mdDialog, $mdToast, $compile, 
         }
         return $mdDialog.show(d);
     };
+    var prompt = function (word, title, ev, ok, cancel) {
+        ok = ok || 'ok';
+        cancel = cancel || 'cancel';
+        //var d = $mdDialog.confirm().parent($container).title(title).content(word + '<input type="text" />').ok(ok).cancel(cancel);
+        //if (ev) {
+        //    d = d.targetEvent(ev);
+        //}
+        return $mdDialog.show({
+            targetEvent: ev,
+            templateUrl: 'views/prompt.html',
+            controller: function ($scope, config) {
+                $scope.config = config;
+
+                $scope.result ='';
+                $scope.onCancel = function () {
+                    $mdDialog.cancel();
+                };
+                $scope.onOk = function () {
+                    $mdDialog.hide($scope.result);
+                };
+            },
+            locals: {
+                config: {
+                    title: title,
+                    content: word,
+                    ok: ok,
+                    cancel: cancel
+                }
+            }
+        });
+    };
 
     var _$toast = null;
     var _toastScope = $rootScope.$new();
@@ -118,6 +149,7 @@ angular.module('ng.zl').factory('$zl', function ($mdDialog, $mdToast, $compile, 
     var ZL = {
         alert: alert,
         confirm: confirm,
+        prompt: prompt,
         tips: toast,
         progress: progress,
         scroll: scroll,

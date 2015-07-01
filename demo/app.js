@@ -35,6 +35,14 @@ angular.module('myApp', ['ng.zl', 'ng.zl.grid', 'ng.zl.uploader']).controller('D
         });
     };
 
+    $scope.onPrompt = function (event) {
+        $zl.prompt('a', 'bbbb', event).then(function (word) {
+            window.console.log('after prompt ok' + word);
+        }, function () {
+            window.console.log('after prompt cancel');
+        });
+    };
+
     var num = 1;
     $scope.onToast = function () {
         num++;
