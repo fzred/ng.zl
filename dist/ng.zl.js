@@ -101,7 +101,7 @@ angular.module('ng.zl.grid', ['ng.zl']).directive('zlGrid', ["$zl", function ($z
             });
 
             $scope.config = _.extend({
-                doReload: false,
+                watchReload: false,
                 enableSelect: false,
                 columns: null,
                 data: [],
@@ -148,7 +148,7 @@ angular.module('ng.zl.grid', ['ng.zl']).directive('zlGrid', ["$zl", function ($z
                 if(newValue){
                     $scope.config.data = [];
                     $scope.getData();
-                    $scope.config.doReload = false;
+                    $scope.config.watchReload = false;
                 }
             });
 
