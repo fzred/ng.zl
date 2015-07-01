@@ -1,6 +1,6 @@
 <md-dialog>
     <md-dialog-content>
-        <h2>{{config.title}}</h2>
+        <h2 ng-if="config.title">{{config.title}}</h2>
         <p>{{config.content}}</p>
         <md-input-container md-no-float>
             <input ng-model="result" placeholder="">
