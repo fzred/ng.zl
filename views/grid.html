@@ -10,11 +10,11 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="data in config.data">
+        <tr ng-repeat="(rowIndex, data) in config.data">
             <td ng-if="config.enableSelect" class="zl-grid-select">
                 <md-checkbox ng-model="data._checked"></md-checkbox>
             </td>
-            <td ng-repeat="col in config.columns">
+            <td ng-repeat="(columnIndex, col) in config.columns">
                 <span ng-if="!col.edit && col.render" style="{{col.style}}">
                     <div zl-compile html="{{col.render(data[col.field])}}"></div>
                 </span>
