@@ -38,6 +38,7 @@ angular.module('ng.zl.grid', ['ng.zl']).directive('zlGrid', function ($zl) {
             });
 
             $scope.config = _.extend({
+                doReload: false,
                 enableSelect: false,
                 columns: null,
                 data: [],
@@ -79,6 +80,14 @@ angular.module('ng.zl.grid', ['ng.zl']).directive('zlGrid', function ($zl) {
             $scope.onEditData = function (col) {
                 return col.editData();
             };
+
+            $scope.$watch('config.watchReload', function (newValue) {
+                if(newValue){
+                    $scope.config.data = [];
+                    $scope.getData();
+                    $scope.config.doReload = false;
+                }
+            });
 
             $scope.getData = function () {
                 $scope.config.getData($scope.config.next).then(function (data) {

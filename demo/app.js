@@ -50,7 +50,7 @@ angular.module('myApp', ['ng.zl', 'ng.zl.grid', 'ng.zl.uploader']).controller('D
     $scope.onProgressDone = function () {
         $zl.progress.done();
     };
-}).controller('GridController', function ($scope, $q, $sce) {
+}).controller('GridController', function ($scope, $q, $timeout) {
     'use strict';
 
     $scope.gridData = {
@@ -70,6 +70,10 @@ angular.module('myApp', ['ng.zl', 'ng.zl.grid', 'ng.zl.uploader']).controller('D
             return getData();
         }
     };
+
+    $timeout(function () {
+        $scope.gridData.watchReload = true;
+    }, 2000);
 
     $scope.editData = editData;
     $scope.select = null;
