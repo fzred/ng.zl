@@ -1,12 +1,160 @@
 angular.module('ng.zl', ['ng', 'ngSanitize','ngMaterial','ng.zl.sha256', 'ng.zl.templates']);
-angular.module("ng.zl.templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("views/grid.edit.html","<div class=\"zl-grid-edit\" ng-dblclick=\"onEdit($event)\">\r\n    <span ng-bind=\"gridModel\" ng-show=\"!edit\"></span>\r\n    <input type=\"text\" tabindex=\"-1\" ng-model=\"gridModel\" ng-show=\"edit\" ng-blur=\"cancelEdit($event)\" ng-keyup=\"onKey($event)\" zl-focus-on=\"zlGridEditInput\"/>\r\n</div>");
+angular.module('ng.zl.pick', ['ng.zl']);
+angular.module("ng.zl.templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("views/apartment.pick.html","<div>\r\n    <md-autocomplete ng-if=\"!pickChips\" flex required\r\n                     md-selected-item=\"ngModel\"\r\n                     md-search-text=\"searchText\"\r\n                     md-items=\"item in querySearch(searchText)\"\r\n                     md-no-cache=\"true\"\r\n                     md-delay=\"500\"\r\n                     md-item-text=\"item.apartmentName\"\r\n                     md-autoselect=\"true\"\r\n                     ng-disabled=\"!pickCommunityId\"\r\n                     md-floating-label=\"APARTMENT\">\r\n        <md-item-template>\r\n            <span md-highlight-text=\"searchText\">{{item.apartmentName}} </span>\r\n        </md-item-template>\r\n        <md-not-found>\r\n            No matches found\r\n        </md-not-found>\r\n    </md-autocomplete>\r\n\r\n\r\n    <md-chips ng-if=\"pickChips\" ng-model=\"ngModel\" md-autocomplete-snap md-require-match>\r\n        <md-autocomplete\r\n                md-selected-item=\"selectedItem\"\r\n                md-search-text=\"searchText\"\r\n                md-items=\"item in querySearch(searchText)\"\r\n                md-no-cache=\"true\"\r\n                md-delay=\"500\"\r\n                md-item-text=\"item.apartmentName\"\r\n                md-autoselect=\"true\"\r\n                ng-disabled=\"!pickCommunityId\"\r\n                placeholder=\"APARTMENT\">\r\n            <md-item-template>\r\n                <span md-highlight-text=\"searchText\">{{item.apartmentName}}</span>\r\n            </md-item-template>\r\n            <md-not-found>\r\n                No matches found\r\n            </md-not-found>\r\n        </md-autocomplete>\r\n        <md-chip-template>\r\n        <span>\r\n          <strong>{{$chip.apartmentName}}</strong>\r\n        </span>\r\n        </md-chip-template>\r\n    </md-chips>\r\n</div>");
+$templateCache.put("views/building.pick.html","<div>\r\n    <md-autocomplete ng-if=\"!pickChips\" flex required\r\n                     md-selected-item=\"ngModel\"\r\n                     md-search-text=\"searchText\"\r\n                     md-items=\"item in querySearch(searchText)\"\r\n                     md-no-cache=\"true\"\r\n                     md-delay=\"500\"\r\n                     md-item-text=\"item.buildingName\"\r\n                     md-autoselect=\"true\"\r\n                     ng-disabled=\"!pickCommunityId\"\r\n                     md-floating-label=\"BUILDING\">\r\n        <md-item-template>\r\n            <span md-highlight-text=\"searchText\">{{item.buildingName}} </span>\r\n        </md-item-template>\r\n        <md-not-found>\r\n            No matches found\r\n        </md-not-found>\r\n    </md-autocomplete>\r\n\r\n\r\n    <md-chips ng-if=\"pickChips\" ng-model=\"ngModel\" md-autocomplete-snap md-require-match>\r\n        <md-autocomplete\r\n                md-selected-item=\"selectedItem\"\r\n                md-search-text=\"searchText\"\r\n                md-items=\"item in querySearch(searchText)\"\r\n                md-no-cache=\"true\"\r\n                md-delay=\"500\"\r\n                md-item-text=\"item.buildingName\"\r\n                md-autoselect=\"true\"\r\n                ng-disabled=\"!pickCommunityId\"\r\n                placeholder=\"BUILDING\">\r\n            <md-item-template>\r\n                <span md-highlight-text=\"searchText\">{{item.buildingName}}</span>\r\n            </md-item-template>\r\n            <md-not-found>\r\n                No matches found\r\n            </md-not-found>\r\n        </md-autocomplete>\r\n        <md-chip-template>\r\n        <span>\r\n          <strong>{{$chip.buildingName}}</strong>\r\n        </span>\r\n        </md-chip-template>\r\n    </md-chips>\r\n</div>");
+$templateCache.put("views/community.pick.html","<div>\r\n    <md-autocomplete ng-if=\"!pickChips\" flex required\r\n                     md-selected-item=\"ngModel\"\r\n                     md-search-text=\"searchText\"\r\n                     md-items=\"item in querySearch(searchText)\"\r\n                     md-no-cache=\"true\"\r\n                     md-delay=\"500\"\r\n                     md-item-text=\"item.name\"\r\n                     md-autoselect=\"true\"\r\n                     ng-disabled=\"!pickCityId\"\r\n                     md-floating-label=\"COMMUNITY\">\r\n        <md-item-template>\r\n            <span md-highlight-text=\"searchText\">{{item.name}} </span>\r\n        </md-item-template>\r\n        <md-not-found>\r\n            No matches found\r\n        </md-not-found>\r\n    </md-autocomplete>\r\n\r\n\r\n    <md-chips ng-if=\"pickChips\" ng-model=\"ngModel\" md-autocomplete-snap md-require-match>\r\n        <md-autocomplete\r\n                md-selected-item=\"selectedItem\"\r\n                md-search-text=\"searchText\"\r\n                md-items=\"item in querySearch(searchText)\"\r\n                md-no-cache=\"true\"\r\n                md-delay=\"500\"\r\n                md-item-text=\"item.name\"\r\n                md-autoselect=\"true\"\r\n                ng-disabled=\"!pickCityId\"\r\n                placeholder=\"COMMUNITY\">\r\n            <md-item-template>\r\n                <span md-highlight-text=\"searchText\">{{item.name}}</span>\r\n            </md-item-template>\r\n            <md-not-found>\r\n                No matches found\r\n            </md-not-found>\r\n        </md-autocomplete>\r\n        <md-chip-template>\r\n        <span>\r\n          <strong>{{$chip.name}}</strong>\r\n        </span>\r\n        </md-chip-template>\r\n    </md-chips>\r\n</div>");
+$templateCache.put("views/grid.edit.html","<div class=\"zl-grid-edit\" ng-dblclick=\"onEdit($event)\">\r\n    <span ng-bind=\"gridModel\" ng-show=\"!edit\"></span>\r\n    <input type=\"text\" tabindex=\"-1\" ng-model=\"gridModel\" ng-show=\"edit\" ng-blur=\"cancelEdit($event)\" ng-keyup=\"onKey($event)\" zl-focus-on=\"zlGridEditInput\"/>\r\n</div>");
 $templateCache.put("views/grid.edit.select.html","<div class=\"zl-grid-edit\" ng-dblclick=\"onEdit($event)\">\r\n    <span ng-bind=\"gridModel\" ng-show=\"!edit\"></span>\r\n    <select tabindex=\"-1\" ng-model=\"selected\" ng-show=\"edit\" zl-focus-on=\"zlGridEditSelect\" ng-blur=\"cancelEdit($event)\" ng-options=\"value.name for value in selects\" ng-change=\"onChange($event)\" ng-keyup=\"onKey($event)\">\r\n    </select>\r\n</div>");
 $templateCache.put("views/grid.edit.switch.html","<div class=\"zl-grid-edit\" ng-dblclick=\"onEdit($event)\">\r\n    <span ng-bind=\"gridModel\" ng-show=\"!edit\"></span>\r\n\r\n    <md-switch class=\"md-primary\" tabindex=\"-1\" ng-model=\"gridModel\" aria-label=\"Switch\" zl-focus-on=\"zlGridEditSwitch\" ng-show=\"edit\" ng-blur=\"cancelEdit($event)\" ng-keyup=\"onKey($event)\" ng-change=\"onChange($event)\"></md-switch>\r\n\r\n</div>");
 $templateCache.put("views/grid.html","<div class=\"zl-grid\">\r\n    <table class=\"table table-striped table-hover table-condensed\">\r\n        <thead>\r\n        <tr>\r\n            <th ng-if=\"config.enableSelect\" class=\"zl-grid-select\">\r\n                <md-checkbox ng-click=\"onCheckAll($event)\"></md-checkbox>\r\n            </th>\r\n            <th ng-repeat=\"col in config.columns\" ng-bind=\"col.name\"></th>\r\n            <th ng-if=\"config.actions.length > 0\">操作</th>\r\n        </tr>\r\n        </thead>\r\n        <tbody>\r\n        <tr ng-repeat=\"(rowIndex, data) in config.data\">\r\n            <td ng-if=\"config.enableSelect\" class=\"zl-grid-select\">\r\n                <md-checkbox ng-model=\"data._checked\"></md-checkbox>\r\n            </td>\r\n            <td ng-repeat=\"(columnIndex, col) in config.columns\">\r\n                <span ng-if=\"!col.edit && col.render\" style=\"{{col.style}}\">\r\n                    <div zl-compile html=\"{{col.render(data[col.field])}}\"></div>\r\n                </span>\r\n                <span ng-if=\"!col.edit && !col.render\" ng-bind=\"data[col.field]\" style=\"{{col.style}}\"></span>\r\n\r\n                <div ng-if=\"col.edit && col.editType === \'input\'\">\r\n                    <div zl-grid-edit grid-model=\"data[col.field]\" grid-after-edit=\"onAfterEdit(value, col, data)\"></div>\r\n                </div>\r\n                <div ng-if=\"col.edit && col.editType === \'select\'\">\r\n                    <div zl-grid-edit-select grid-model=\"data[col.field]\" grid-edit-type=\"col.editType\" grid-edit-data=\"col.editData()\" grid-after-edit=\"onAfterEdit(value, col, data)\"></div>\r\n                </div>\r\n                <div ng-if=\"col.edit && col.editType === \'switch\'\">\r\n                    <div zl-grid-edit-switch grid-model=\"data[col.field]\" grid-after-edit=\"onAfterEdit(value, col, data)\"></div>\r\n                </div>\r\n            </td>\r\n\r\n            <td ng-if=\"config.actions.length > 0\">\r\n                <md-button ng-repeat=\"act in config.actions\" class=\"md-raised {{act.className}}\" ng-bind=\"act.html\"\r\n                           ng-click=\"act.action(data, config.data, $event)\"></md-button>\r\n            </td>\r\n        </tr>\r\n        </tbody>\r\n    </table>\r\n    <div layout=\"row\">\r\n        <md-button class=\"md-raised\" ng-click=\"getData()\" ng-if=\"config.next\">More</md-button>\r\n        <md-button class=\"md-raised\" ng-if=\"!config.next\" ng-disabled=\"true\">No More</md-button>\r\n        <div flex ng-if=\"config.enableSelect && config.actions.length > 0\">\r\n            <md-button ng-repeat=\"act in config.actions\" class=\"md-raised {{act.className}}\" ng-bind=\"act.html\"\r\n                       ng-click=\"onBatch(act, $event)\"></md-button>\r\n        </div>\r\n    </div>\r\n</div>");
 $templateCache.put("views/progress.html","<div class=\"zl-progress\" ng-if=\"show\">\r\n    <md-progress-circular md-mode=\"indeterminate\"></md-progress-circular>\r\n</div>");
 $templateCache.put("views/prompt.html","<md-dialog>\r\n    <md-dialog-content>\r\n        <h2 ng-if=\"config.title\">{{config.title}}</h2>\r\n        <p>{{config.content}}</p>\r\n        <md-input-container md-no-float>\r\n            <input ng-model=\"result\" placeholder=\"\">\r\n        </md-input-container>\r\n    </md-dialog-content>\r\n    <div class=\"md-actions\">\r\n        <md-button ng-click=\"onCancel()\" class=\"md-primary\">{{config.cancel | uppercase}}</md-button>\r\n        <md-button ng-click=\"onOk()\" class=\"md-primary\">{{config.ok | lowercase}}</md-button>\r\n    </div>\r\n</md-dialog>");
+$templateCache.put("views/region.pick.html","<div>\r\n    <md-autocomplete ng-if=\"!pickChips\" flex required\r\n                     md-selected-item=\"ngModel\"\r\n                     md-search-text=\"searchText\"\r\n                     md-items=\"item in querySearch(searchText)\"\r\n                     md-no-cache=\"true\"\r\n                     md-delay=\"500\"\r\n                     md-item-text=\"item.name\"\r\n                     md-autoselect=\"true\"\r\n                     ng-disabled=\"(needRegionParent && !regionParent)\"\r\n                     md-floating-label=\"{{name | uppercase}}\">\r\n        <md-item-template>\r\n            <span md-highlight-text=\"searchText\">{{item.name}} </span>\r\n            <small md-highlight-text=\"searchText\">({{item.path}})</small>\r\n        </md-item-template>\r\n        <md-not-found>\r\n            No matches found\r\n        </md-not-found>\r\n    </md-autocomplete>\r\n\r\n\r\n    <md-chips ng-if=\"pickChips\" ng-model=\"ngModel\" md-autocomplete-snap md-require-match>\r\n        <md-autocomplete\r\n                md-selected-item=\"selectedItem\"\r\n                md-search-text=\"searchText\"\r\n                md-items=\"item in querySearch(searchText)\"\r\n                md-no-cache=\"true\"\r\n                md-delay=\"500\"\r\n                md-item-text=\"item.name\"\r\n                md-autoselect=\"true\"\r\n                ng-disabled=\"(needRegionParent && !regionParent)\"\r\n                placeholder=\"{{name | uppercase}}\">\r\n            <md-item-template>\r\n                <span md-highlight-text=\"searchText\">{{item.name}}</span>\r\n                <small md-highlight-text=\"searchText\">({{item.path}})</small>\r\n            </md-item-template>\r\n            <md-not-found>\r\n                No matches found\r\n            </md-not-found>\r\n        </md-autocomplete>\r\n        <md-chip-template>\r\n        <span>\r\n          <strong>{{$chip.name}}</strong><small>({{$chip.path}})</small>\r\n        </span>\r\n        </md-chip-template>\r\n    </md-chips>\r\n</div>");
 $templateCache.put("views/scroll.html","<div class=\"zl-scroll\">\r\n    <div ng-show=\"isShow\">\r\n    <md-button class=\"md-fab md-primary md-mini\" ng-click=\"onTop()\" ng-if=\"top\">\r\n        t\r\n    </md-button>\r\n\r\n    <md-button class=\"md-fab md-primary md-mini\" ng-click=\"onBottom()\" ng-if=\"bottom\">\r\n        b\r\n    </md-button>\r\n    </div>\r\n</div>");
 $templateCache.put("views/toast.html","<div class=\"zl-toast-container\">\r\n    <md-toast ng-repeat=\"t in list\" class=\"md-default-theme\">\r\n        <span ng-bind=\"t.word\"></span>\r\n    </md-toast>\r\n</div>");}]);
+angular.module('ng.zl.pick').directive('zlApartmentPick', ["ZlPickService", function (ZlPickService) {
+    'use strict';
+
+    // 有点复杂，不写注释了
+
+    return {
+        restrict: 'A',
+        replace: true,
+        scope: {
+            pickCommunityId: '=',
+            pickBuildingName: '=',
+            ngModel: '=',
+            pickChips: '='
+        },
+        templateUrl: 'views/apartment.pick.html',
+        controller: ["$scope", function ($scope) {
+            $scope.pickChips = $scope.pickChips || false;
+
+            $scope.searchText = null;
+            $scope.selectedItem = null;
+
+            $scope.querySearch = function (searchText) {
+                return ZlPickService.getApartmentByWord({
+                    buildingName: $scope.pickBuildingName,
+                    communityId: $scope.pickCommunityId,
+                    keyword: searchText
+                }).then(function (data) {
+                    if ($scope.pickChips) {
+                        return _.filter(data, function (value) {
+                            return !isExist(value, $scope.ngModel);
+                        });
+                    }
+                    return data;
+                });
+            };
+
+            function isExist(item, items) {
+                var result = false;
+                _.each(items, function (value) {
+                    if (value.addressId === item.addressId) {
+                        result = true;
+                    }
+                });
+                return result;
+            }
+        }]
+    };
+}]);
+
+angular.module('ng.zl.pick').directive('zlBuildingPick', ["ZlPickService", function (ZlPickService) {
+    'use strict';
+
+    // 有点复杂，不写注释了
+
+    return {
+        restrict: 'A',
+        replace: true,
+        scope: {
+            pickCommunityId: '=',
+            ngModel: '=',
+            pickChips: '='
+        },
+        templateUrl: 'views/building.pick.html',
+        controller: ["$scope", function ($scope) {
+            $scope.pickChips = $scope.pickChips || false;
+
+            $scope.searchText = null;
+            $scope.selectedItem = null;
+
+            $scope.querySearch = function (searchText) {
+                return ZlPickService.getBuildingByWord({
+                    communityId: $scope.pickCommunityId,
+                    keyword: searchText
+                }).then(function (data) {
+                    if ($scope.pickChips) {
+                        return _.filter(data, function (value) {
+                            return !isExist(value, $scope.ngModel);
+                        });
+                    }
+                    return data;
+                });
+            };
+
+            function isExist(item, items) {
+                var result = false;
+                _.each(items, function (value) {
+                    if (value.buildingName === item.buildingName) {
+                        result = true;
+                    }
+                });
+                return result;
+            }
+        }]
+    };
+}]);
+
+angular.module('ng.zl.pick').directive('zlCommunityPick', ["ZlPickService", function (ZlPickService) {
+    'use strict';
+
+    // 有点复杂，不写注释了
+
+    return {
+        restrict: 'A',
+        replace: true,
+        scope: {
+            pickCityId: '=',
+            ngModel: '=',
+            pickChips: '='
+        },
+        templateUrl: 'views/community.pick.html',
+        controller: ["$scope", function ($scope) {
+            $scope.pickChips = $scope.pickChips || false;
+
+            $scope.searchText = null;
+            $scope.selectedItem = null;
+
+            $scope.querySearch = function (searchText) {
+                return ZlPickService.getCommunityByWord({
+                    cityId: $scope.pickCityId,
+                    keyword: searchText
+                }).then(function (data) {
+                    if ($scope.pickChips) {
+                        return _.filter(data, function (value) {
+                            return !isExist(value, $scope.ngModel);
+                        });
+                    }
+                    return data;
+                });
+            };
+
+            function isExist(item, items) {
+                var result = false;
+                _.each(items, function (value) {
+                    if (value.id === item.id) {
+                        result = true;
+                    }
+                });
+                return result;
+            }
+        }]
+    };
+}]);
+
 angular.module('ng.zl').directive('zlCompile', ["$compile", function ($compile) {
     'use strict';
     return {
@@ -329,6 +477,65 @@ angular.module('ng.zl.grid', ['ng.zl']).directive('zlGrid', ["$zl", function ($z
         }]
     };
 }]);
+angular.module('ng.zl.pick').directive('zlRegionPick', ["ZlPickService", function (ZlPickService) {
+    'use strict';
+
+    // 有点复杂，不写注释了
+
+    return {
+        restrict: 'A',
+        replace: true,
+        scope: {
+            regionParent: '=',
+            ngModel: '=',
+            pickChips: '='
+        },
+        templateUrl: 'views/region.pick.html',
+        controller: ["$scope", "$attrs", function ($scope, $attrs) {
+            var api = '';
+
+            $scope.pickChips = $scope.pickChips || false;
+
+            $scope.needRegionParent = $attrs.regionParent !== undefined;
+            $scope.name = $attrs.zlRegionPick;
+
+            if ($scope.name === 'province') {
+                api = 'getProvinceByWord';
+            } else if ($scope.name === 'city') {
+                api = 'getCityByWord';
+            } else if ($scope.name === 'area') {
+                api = 'getAreaByWord';
+            }
+
+            $scope.searchText = null;
+            $scope.selectedItem = null;
+            $scope.querySearch = function (searchText) {
+                return ZlPickService[api]({
+                    parentId: $scope.regionParent && $scope.regionParent.id || null,
+                    keyword: searchText
+                }).then(function (data) {
+                    if ($scope.pickChips) {
+                        return _.filter(data, function (value) {
+                            return !isExist(value, $scope.ngModel);
+                        });
+                    }
+                    return data;
+                });
+            };
+
+            function isExist(item, items) {
+                var result = false;
+                _.each(items, function (value) {
+                    if (value.id === item.id) {
+                        result = true;
+                    }
+                });
+                return result;
+            }
+        }]
+    };
+}]);
+
 angular.module('ng.zl').directive('zlScroll', ["$zl", "$mdMedia", function ($zl, $mdMedia) {
     'use strict';
     return {
@@ -530,6 +737,92 @@ angular.module('ng.zl').factory('$zl', ["$mdDialog", "$mdToast", "$compile", "$r
     window.ZL = ZL;
 
     return ZL;
+}]);
+angular.module('ng.zl.pick').factory('ZlPickService', ["$q", "ConfigService", "$log", "$zl", function ($q, ConfigService, $log, $zl) {
+    'use strict';
+
+    var baseUrl = '/admin/';
+
+    function post(url, params) {
+        var def = $q.defer();
+        $.ajax({
+            url: url[0] === '/' ? url : (baseUrl + url),
+            type: 'post',
+            data: params,
+            dataType: 'json',
+            success: function (data) {
+                def.resolve(data);
+            },
+            error: function () {
+                def.reject('服务器错误');
+            }
+        });
+        return processPromise(def.promise);
+    }
+
+    function processPromise(promise) {
+        // 处理http
+        return promise.then(function (data) {
+            if (data.errorCode === 0 || data.errorCode === 200) {
+                return data.response || {}; // 兼容
+            } else {
+                return $q.reject((data.errorDescription || '未知错误') + '  errorCode:' + data.errorCode + '  version:' + data.version);
+            }
+        }, function (reason) {
+            return $q.reject(reason);
+        }).then(function (data) {
+            return data;
+        }, function (reason) {
+            // 错误提示
+            $zl.tips(reason);
+            return $q.reject(reason);
+        });
+    }
+
+    var dataService = {};
+
+    // region
+    dataService.getProvinceByWord = function (params) {
+        return post('/region/listRegionByKeyword', _.extend(params, {
+            scope: 1
+        }));
+    };
+    dataService.getCityByWord = function (params) {
+        return post('/region/listRegionByKeyword', _.extend(params, {
+            scope: 2
+        }));
+    };
+    dataService.getAreaByWord = function (params) {
+        return post('/region/listRegionByKeyword', _.extend(params, {
+            scope: 3
+        }));
+    };
+    // address
+    dataService.getCommunityByWord = function (params) {
+        return post('/address/searchCommunities', params);
+    };
+    dataService.getBuildingByWord = function (params) {
+        return post('/address/listBuildingsByKeyword', params);
+    };
+    dataService.getApartmentByWord = function (params) {
+        return post('/address/listApartmentsByKeyword', params);
+    };
+
+    // 在封装一层，打印交出去的数据
+    // 同时把params复制一份，避免干扰之前的数据
+
+    var packDataService = {};
+    _.each(dataService, function (value, key) {
+        packDataService[key] = function (params) {
+            return value.apply(this, [angular.copy(params)]).then(function (data) {
+                //$log.info('data.service info: ' + key);
+                //$log.info(data);
+                return angular.copy(data);
+            });
+        };
+    });
+
+    return packDataService;
 }]);
 angular.module('ng.zl.sha256', []).factory('$zlSha256', function () {
     'use strict';

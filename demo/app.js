@@ -66,7 +66,14 @@ angular.module('myApp', ['ng.zl', 'ng.zl.grid', 'ng.zl.uploader']).controller('D
         columns: [
             {field: 'id', name: 'id', render: renderId},
             {field: 'name', name: '名字', edit: true, editType: 'input', afterEdit: afterEdit},
-            {field: 'gender', name: '性别', edit: true, editType: 'select', editData: editData, afterEdit: afterEditGender},
+            {
+                field: 'gender',
+                name: '性别',
+                edit: true,
+                editType: 'select',
+                editData: editData,
+                afterEdit: afterEditGender
+            },
             {field: 'isOk', name: '是否', edit: true, editType: 'switch', afterEdit: afterEditOk}
         ],
         actions: [{
@@ -109,11 +116,11 @@ angular.module('myApp', ['ng.zl', 'ng.zl.grid', 'ng.zl.uploader']).controller('D
         return '<input ng-model="data[col.field]" />';
     }
 
-    function afterEditOk(data){
+    function afterEditOk(data) {
         console.log(data);
     }
 
-    function afterEditGender(data){
+    function afterEditGender(data) {
         console.log(data);
     }
 
@@ -156,4 +163,20 @@ angular.module('myApp', ['ng.zl', 'ng.zl.grid', 'ng.zl.uploader']).controller('D
         });
         return def.promise;
     }
+}).controller('PickController', function ($scope) {
+    'use strict';
+
+    $scope.province = null;
+    $scope.city = null;
+    $scope.area = null;
+
+    $scope.community = null;
+    $scope.communitys = [];
+
+    $scope.building = null;
+    $scope.buildings = [];
+
+    $scope.apartment = null;
+    $scope.apartments = [];
+
 });
