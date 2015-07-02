@@ -1,4 +1,4 @@
-angular.module('ng.zl.pick', 'ng.zl').directive('zlRegionPick', function (DataService) {
+angular.module('ng.zl.pick').directive('zlRegionPick', function (ZlPickService) {
     'use strict';
 
     // 有点复杂，不写注释了
@@ -31,7 +31,7 @@ angular.module('ng.zl.pick', 'ng.zl').directive('zlRegionPick', function (DataSe
             $scope.searchText = null;
             $scope.selectedItem = null;
             $scope.querySearch = function (searchText) {
-                return DataService[api]({
+                return ZlPickService[api]({
                     parentId: $scope.regionParent && $scope.regionParent.id || null,
                     keyword: searchText
                 }).then(function (data) {

@@ -1,4 +1,4 @@
-angular.module('ng.zl.pick', 'ng.zl').directive('zlCommunityPick', function (DataService) {
+angular.module('ng.zl.pick').directive('zlCommunityPick', function (ZlPickService) {
     'use strict';
 
     // 有点复杂，不写注释了
@@ -19,7 +19,7 @@ angular.module('ng.zl.pick', 'ng.zl').directive('zlCommunityPick', function (Dat
             $scope.selectedItem = null;
 
             $scope.querySearch = function (searchText) {
-                return DataService.getCommunityByWord({
+                return ZlPickService.getCommunityByWord({
                     cityId: $scope.pickCityId,
                     keyword: searchText
                 }).then(function (data) {
