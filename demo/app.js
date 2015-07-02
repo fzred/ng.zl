@@ -1,4 +1,4 @@
-angular.module('myApp', ['ng.zl', 'ng.zl.grid', 'ng.zl.uploader']).controller('DemoController', function ($scope, $zlUploader, $zl) {
+angular.module('myApp', ['ng.zl', 'ng.zl.grid', 'ng.zl.uploader', 'ng.zl.pick']).controller('DemoController', function ($scope, $zlUploader, $zl) {
     'use strict';
 
     $zlUploader.imgUpload($('#uploadFile'), {
@@ -16,6 +16,21 @@ angular.module('myApp', ['ng.zl', 'ng.zl.grid', 'ng.zl.uploader']).controller('D
             }
         }
     });
+
+
+
+    $scope.province = {};
+    $scope.city = {};
+    $scope.area = {};
+
+    $scope.community = null;
+    $scope.communitys = [];
+
+    $scope.building = null;
+    $scope.buildings = [];
+
+    $scope.apartment = null;
+    $scope.apartments = [];
 
 }).controller('DialogController', function ($scope, $timeout, $zl) {
 
@@ -163,20 +178,4 @@ angular.module('myApp', ['ng.zl', 'ng.zl.grid', 'ng.zl.uploader']).controller('D
         });
         return def.promise;
     }
-}).controller('PickController', function ($scope) {
-    'use strict';
-
-    $scope.province = null;
-    $scope.city = null;
-    $scope.area = null;
-
-    $scope.community = null;
-    $scope.communitys = [];
-
-    $scope.building = null;
-    $scope.buildings = [];
-
-    $scope.apartment = null;
-    $scope.apartments = [];
-
 });

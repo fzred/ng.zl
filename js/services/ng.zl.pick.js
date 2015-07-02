@@ -1,4 +1,4 @@
-angular.module('ng.zl.pick').factory('ZlPickService', function ($q, ConfigService, $log, $zl) {
+angular.module('ng.zl.pick').factory('ZlPickService', function ($q, $log, $zl) {
     'use strict';
 
     var baseUrl = '/admin/';

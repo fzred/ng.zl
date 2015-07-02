@@ -11,8 +11,36 @@
     <!-- endinject -->
 </head>
 <body ng-controller="DemoController">
-
 <div>
+    <div layout="row">
+
+        <div flex zl-region-pick="province" ng-model="province"></div>
+
+        <div flex zl-region-pick="city" region-parent="province" ng-model="city"></div>
+        <div flex zl-region-pick="area" region-parent="city" ng-model="area"></div>
+    </div>
+
+    <div flex zl-region-pick="city" pick-chips="true" ng-model="citys"></div>
+
+
+    <div layout="row">
+        <div flex zl-community-pick pick-city-id="5636106" ng-model="community"></div>
+
+        <div flex zl-building-pick pick-community-id="14" ng-model="building"></div>
+
+        <div flex zl-apartment-pick pick-community-id="14" pick-building-name="'1-1'" ng-model="apartment"></div>
+    </div>
+
+    <div flex zl-community-pick pick-city-id="5636106" pick-chips="true" ng-model="communitys"></div>
+
+    <div flex zl-building-pick pick-community-id="14" pick-chips="true" ng-model="buildings"></div>
+
+    <div flex zl-apartment-pick pick-community-id="14" pick-building-name="'1-1'" pick-chips="true"
+         ng-model="apartments"></div>
+</div>
+<div>
+
+
     <div ng-controller="DialogController">
         <md-button ng-click="onAlert($event)">alert</md-button>
         <md-button ng-click="onConfirm($event)">confirm</md-button>
@@ -27,65 +55,17 @@
         <div zl-grid config="gridData"></div>
     </div>
 
-    <!--<div ng-controller="DemoSubController">-->
-        <!--<div layout="row">-->
-            <!--<div flex region-pick-directive="province" ng-model="province"></div>-->
-            <!--<div flex region-pick-directive="city" region-parent="province" ng-model="city"></div>-->
-            <!--<div flex region-pick-directive="area" region-parent="city" ng-model="area"></div>-->
-        <!--</div>-->
-
-        <!--<div flex region-pick-directive="city" pick-chips="true" ng-model="citys"></div>-->
-
-
-        <!--<div layout="row">-->
-            <!--<div flex community-pick-directive pick-city-id="5636106" ng-model="community"></div>-->
-
-            <!--<div flex building-pick-directive pick-community-id="14" ng-model="building"></div>-->
-
-            <!--<div flex apartment-pick-directive pick-community-id="14" pick-building-name="'1-1'" ng-model="apartment"></div>-->
-        <!--</div>-->
-
-        <!--<div flex community-pick-directive pick-city-id="5636106" pick-chips="true" ng-model="communitys"></div>-->
-
-        <!--<div flex building-pick-directive pick-community-id="14" pick-chips="true" ng-model="buildings"></div>-->
-
-        <!--<div flex apartment-pick-directive pick-community-id="14" pick-building-name="'1-1'" pick-chips="true" ng-model="apartments"></div>-->
-    <!--</div>-->
-
     <button type="button" id="uploadFile">Upload</button>
 
     <div zl-scroll="scroll-top scroll-bottom"></div>
 
-    <div ng-controller="PickController">
-        <div layout="row">
-            <div flex zl-region-pick="province" ng-model="province"></div>
-            <!--<div flex zl-region-pick="city" region-parent="province" ng-model="city"></div>-->
-            <!--<div flex zl-region-pick="area" region-parent="city" ng-model="area"></div>-->
-        </div>
-
-        <!--<div flex zl-region-pick="city" pick-chips="true" ng-model="citys"></div>-->
-
-
-        <!--<div layout="row">-->
-            <!--<div flex zl-community-pick pick-city-id="5636106" ng-model="community"></div>-->
-
-            <!--<div flex zl-building-pick pick-community-id="14" ng-model="building"></div>-->
-
-            <!--<div flex zl-apartment-pick pick-community-id="14" pick-building-name="'1-1'" ng-model="apartment"></div>-->
-        <!--</div>-->
-
-        <!--<div flex zl-community-pick pick-city-id="5636106" pick-chips="true" ng-model="communitys"></div>-->
-
-        <!--<div flex zl-building-pick pick-community-id="14" pick-chips="true" ng-model="buildings"></div>-->
-
-        <!--<div flex zl-apartment-pick pick-community-id="14" pick-building-name="'1-1'" pick-chips="true" ng-model="apartments"></div>-->
-    </div>
 </div>
+
 
 <!-- inject:js -->
 <script src="../bower_components/jquery/dist/jquery.js"></script>
 <script src="../bower_components/underscore/underscore-min.js"></script>
-<script src="../bower_components/angular/angular.min.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
 <script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
 <script src="../bower_components/angular-animate/angular-animate.js"></script>
 <script src="../bower_components/angular-aria/angular-aria.js"></script>

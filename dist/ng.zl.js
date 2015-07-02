@@ -738,7 +738,7 @@ angular.module('ng.zl').factory('$zl', ["$mdDialog", "$mdToast", "$compile", "$r
 
     return ZL;
 }]);
-angular.module('ng.zl.pick').factory('ZlPickService', ["$q", "ConfigService", "$log", "$zl", function ($q, ConfigService, $log, $zl) {
+angular.module('ng.zl.pick').factory('ZlPickService', ["$q", "$log", "$zl", function ($q, $log, $zl) {
     'use strict';
 
     var baseUrl = '/admin/';
