@@ -106,7 +106,10 @@ angular.module('ng.zl.grid', ['ng.zl', 'ng.zl.exporter']).directive('zlGrid', fu
 
 
             $scope.onExportToCSV = function () {
-                $zlExporter.toCsv('table', $scope.config.data, _.map($scope.config.columns, function (value) {
+
+                $zlExporter.toCsv('table', $scope.config.data, _.map(_.filter($scope.config.columns, function (value) {
+                    return !value.unexport;
+                }), function (value) {
                     return {field: value.field, name: value.name};
                 }));
             };
