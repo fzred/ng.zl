@@ -13,13 +13,21 @@ angular.module('ng.zl.pick').directive('zlRegionPick', function (ZlPickService) 
         },
         templateUrl: 'views/region.pick.html',
         controller: function ($scope, $attrs) {
-            var api = '';
-
             $scope.pickChips = $scope.pickChips || false;
+
+            // 传引用过去
+            $scope.pick = {
+                ngModel: $scope.pickChips ? [] : null
+            };
+
+            $scope.$watch('pick.ngModel', function(newValue){
+                $scope.ngModel = newValue;
+            });
 
             $scope.needRegionParent = $attrs.regionParent !== undefined;
             $scope.name = $attrs.zlRegionPick;
 
+            var api = '';
             if ($scope.name === 'province') {
                 api = 'getProvinceByWord';
             } else if ($scope.name === 'city') {
@@ -28,8 +36,6 @@ angular.module('ng.zl.pick').directive('zlRegionPick', function (ZlPickService) 
                 api = 'getAreaByWord';
             }
 
-            $scope.searchText = null;
-            $scope.selectedItem = null;
             $scope.querySearch = function (searchText) {
                 return ZlPickService[api]({
                     parentId: $scope.regionParent && $scope.regionParent.id || null,
@@ -37,7 +43,7 @@ angular.module('ng.zl.pick').directive('zlRegionPick', function (ZlPickService) 
                 }).then(function (data) {
                     if ($scope.pickChips) {
                         return _.filter(data, function (value) {
-                            return !isExist(value, $scope.ngModel);
+                            return !isExist(value, $scope.pick.ngModel);
                         });
                     }
                     return data;

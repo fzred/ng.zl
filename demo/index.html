@@ -20,15 +20,15 @@
         <div flex zl-region-pick="area" region-parent="city" ng-model="area"></div>
     </div>
 
-    <div flex zl-region-pick="city" pick-chips="true" ng-model="citys"></div>
+    <div flex zl-region-pick="city" pick-chips="true" ng-model="citys" region-parent="province"></div>
 
 
     <div layout="row">
         <div flex zl-community-pick pick-city-id="5636106" ng-model="community"></div>
 
-        <div flex zl-building-pick pick-community-id="14" ng-model="building"></div>
+        <div flex zl-building-pick pick-community-id="community.id" ng-model="building"></div>
 
-        <div flex zl-apartment-pick pick-community-id="14" pick-building-name="'1-1'" ng-model="apartment"></div>
+        <div flex zl-apartment-pick pick-community-id="community.id" pick-building-name="building.buildingName" ng-model="apartment"></div>
     </div>
 
     <div flex zl-community-pick pick-city-id="5636106" pick-chips="true" ng-model="communitys"></div>

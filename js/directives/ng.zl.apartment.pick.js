@@ -16,8 +16,14 @@ angular.module('ng.zl.pick').directive('zlApartmentPick', function (ZlPickServic
         controller: function ($scope) {
             $scope.pickChips = $scope.pickChips || false;
 
-            $scope.searchText = null;
-            $scope.selectedItem = null;
+            // 传引用过去
+            $scope.pick = {
+                ngModel: $scope.pickChips ? [] : null
+            };
+
+            $scope.$watch('pick.ngModel', function(newValue){
+                $scope.ngModel = newValue;
+            });
 
             $scope.querySearch = function (searchText) {
                 return ZlPickService.getApartmentByWord({
@@ -27,7 +33,7 @@ angular.module('ng.zl.pick').directive('zlApartmentPick', function (ZlPickServic
                 }).then(function (data) {
                     if ($scope.pickChips) {
                         return _.filter(data, function (value) {
-                            return !isExist(value, $scope.ngModel);
+                            return !isExist(value, $scope.pick.ngModel);
                         });
                     }
                     return data;
