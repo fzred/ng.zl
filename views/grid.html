@@ -45,5 +45,8 @@
             <md-button ng-repeat="act in config.actions" class="md-raised {{act.className}}" ng-bind="act.html"
                        ng-click="onBatch(act, $event)"></md-button>
         </div>
+        <div flex layout="row" layout-align="end">
+            <md-button ng-if="config.enableExport" ng-click="onExportToCSV()">export to csv</md-button>
+        </div>
     </div>
 </div>

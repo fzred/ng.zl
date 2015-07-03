@@ -18,7 +18,6 @@ angular.module('myApp', ['ng.zl', 'ng.zl.grid', 'ng.zl.uploader', 'ng.zl.pick'])
     });
 
 
-
     $scope.province = null;
     $scope.city = null;
     $scope.area = null;
@@ -78,8 +77,15 @@ angular.module('myApp', ['ng.zl', 'ng.zl.grid', 'ng.zl.uploader', 'ng.zl.pick'])
 }).controller('GridController', function ($scope, $q, $timeout) {
     'use strict';
 
+    //$scope.onExport = function () {
+    //    $zlExporter.toCsv('test', $scope.gridData.data, _.map($scope.gridData.columns, function (value) {
+    //        return {field: value.field, name: value.name};
+    //    }));
+    //};
+
     $scope.gridData = {
         enableSelect: true,
+        enableExport: true,
         columns: [
             {field: 'id', name: 'id', render: renderId},
             {field: 'name', name: '名字', edit: true, editType: 'input', afterEdit: afterEdit},

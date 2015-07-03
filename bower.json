@@ -1,6 +1,6 @@
 {
   "name": "ng.zl",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "homepage": "https://github.com/zlfe/ng.zl",
   "authors": [
     "yatang.li <yatang.li@zuolin.com>"
@@ -20,6 +20,7 @@
     "angular-sanitize": "~1.4.0",
     "bootstrap": "~3.3.5",
     "angular": "1.4.0",
-    "angular-material": "0.9.6"
+    "angular-material": "0.9.6",
+    "FileSaver": "*"
   }
 }

@@ -1,9 +1,10 @@
-angular.module('ng.zl.grid', ['ng.zl']).directive('zlGrid', function ($zl) {
+angular.module('ng.zl.grid', ['ng.zl', 'ng.zl.exporter']).directive('zlGrid', function ($zl, $zlExporter) {
     'use strict';
 
     /*支持修改文本和修改select。 改后值为新的，此时会调用afterEdit,返回promise,如果失败会回复原始值*/
     /*$scope.gridData = {
      enableSelect: true,
+     enableExport: true,
      columns: [
      {field: 'serialNumber', name: '序号'},
      {field: 'type', name: '类型', edit: true, editType: 'input', afterEdit: afterEdit},
@@ -40,6 +41,7 @@ angular.module('ng.zl.grid', ['ng.zl']).directive('zlGrid', function ($zl) {
             $scope.config = _.extend({
                 watchReload: false,
                 enableSelect: false,
+                enableExport: false,
                 columns: null,
                 data: [],
                 next: null,
@@ -82,7 +84,7 @@ angular.module('ng.zl.grid', ['ng.zl']).directive('zlGrid', function ($zl) {
             };
 
             $scope.$watch('config.watchReload', function (newValue) {
-                if(newValue){
+                if (newValue) {
                     $scope.config.data = [];
                     $scope.getData();
                     $scope.config.watchReload = false;
@@ -101,6 +103,13 @@ angular.module('ng.zl.grid', ['ng.zl']).directive('zlGrid', function ($zl) {
             };
 
             $scope.getData();
+
+
+            $scope.onExportToCSV = function () {
+                $zlExporter.toCsv('table', $scope.config.data, _.map($scope.config.columns, function (value) {
+                    return {field: value.field, name: value.name};
+                }));
+            };
         }
     };
 }).directive('zlGridEdit', function ($zlFocusOn, $timeout) {

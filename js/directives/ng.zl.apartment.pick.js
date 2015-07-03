@@ -1,4 +1,4 @@
-angular.module('ng.zl.pick').directive('zlApartmentPick', function (ZlPickService) {
+angular.module('ng.zl.pick').directive('zlApartmentPick', function ($zlPickService) {
     'use strict';
 
     // 有点复杂，不写注释了
@@ -26,7 +26,7 @@ angular.module('ng.zl.pick').directive('zlApartmentPick', function (ZlPickServic
             });
 
             $scope.querySearch = function (searchText) {
-                return ZlPickService.getApartmentByWord({
+                return $zlPickService.getApartmentByWord({
                     buildingName: $scope.pickBuildingName,
                     communityId: $scope.pickCommunityId,
                     keyword: searchText

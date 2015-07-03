@@ -52,6 +52,7 @@
     </div>
 
     <div ng-controller="GridController">
+        <md-button class="md-raised" ng-click="onExport()">export to csv</md-button>
         <div zl-grid config="gridData"></div>
     </div>
 
@@ -70,6 +71,7 @@
 <script src="../bower_components/angular-animate/angular-animate.js"></script>
 <script src="../bower_components/angular-aria/angular-aria.js"></script>
 <script src="../bower_components/angular-material/angular-material.js"></script>
+<script src="../bower_components/FileSaver/FileSaver.min.js"></script>
 <script src="../js/common/uploadifive/jquery.uploadifive.min.js"></script>
 <script src="../js/module.js"></script>
 <script src="../js/module.pick.js"></script>
@@ -82,6 +84,7 @@
 <script src="../js/directives/ng.zl.grid.js"></script>
 <script src="../js/directives/ng.zl.region.pick.js"></script>
 <script src="../js/directives/ng.zl.scroll.js"></script>
+<script src="../js/services/ng.zl.exporter.js"></script>
 <script src="../js/services/ng.zl.focus.on.js"></script>
 <script src="../js/services/ng.zl.js"></script>
 <script src="../js/services/ng.zl.pick.js"></script>
