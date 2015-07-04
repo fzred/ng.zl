@@ -174,12 +174,12 @@ angular.module('myApp', ['ng.zl', 'ng.zl.grid', 'ng.zl.uploader', 'ng.zl.pick'])
                 isOk: true
             }, {
                 id: 1,
-                name: 'haha',
+                name: '有引号"有引号',
                 gender: 1,
                 isOk: false
             }, {
                 id: 1,
-                name: 'haha',
+                name: '有逗号,有逗号',
                 gender: 1,
                 isOk: false
             }]

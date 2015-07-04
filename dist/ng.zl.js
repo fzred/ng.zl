@@ -632,12 +632,36 @@ angular.module('ng.zl').directive('zlScroll', ["$zl", "$mdMedia", function ($zl,
 angular.module('ng.zl.exporter', []).factory('$zlExporter', function () {
     'use strict';
 
-    var exporter = {};
+    var fixCSVField = function(value) {
+        var fixedValue = value;
+        var addQuotes = (value.indexOf(',') !== -1) || (value.indexOf('\r') !== -1) || (value.indexOf('\n') !== -1);
+        var replaceDoubleQuotes = (value.indexOf('"') !== -1);
+
+        if (replaceDoubleQuotes) {
+            fixedValue = fixedValue.replace(/"/g, '""');
+        }
+        if (addQuotes || replaceDoubleQuotes) {
+            fixedValue = '"' + fixedValue + '"';
+        }
+        return fixedValue;
+    };
+
+    var charSet = document.characterSet || 'utf-8';
+
+
+
+    var uri = {
+        json: 'application/json;charset='+charSet,
+        txt: 'csv/txt;charset='+charSet,
+        csv: 'csv/txt;charset='+charSet,
+        doc: 'application/vnd.ms-doc',
+        excel: 'application/vnd.ms-excel'
+    };
+
 
 
     //var header = [{field: 'id', name: '编号'}];
-
-    function data2csv(data, header){
+    function data2csv(data, header) {
         var result = [];
 
         result.push(_.map(header, function (value) {
@@ -646,23 +670,26 @@ angular.module('ng.zl.exporter', []).factory('$zlExporter', function () {
 
         angular.forEach(data, function (value) {
             result.push(_.map(header, function (val) {
-                return value[val.field] + '';
+                return fixCSVField(value[val.field]);
             }).join(','));
         });
 
         return result.join('\n');
     }
 
-    exporter.toCsv = function (name, data, header) {
+    var toCsv = function (name, data, header) {
         data = angular.copy(data);
         name = name || 'table.csv';
-        if(name.slice(-4) !== '.csv'){
+        if (name.slice(-4) !== '.csv') {
             name += '.csv';
         }
-        var blob = new Blob([data2csv(data, header)], {type: 'text/csv;charset=utf-8'});
+        var blob = new Blob([data2csv(data, header)], {type: 'text/csv;charset=' + charSet});
         window.saveAs(blob, name);
     };
 
+    var exporter = {
+        toCsv: toCsv
+    };
     return exporter;
 });
 angular.module('ng.zl').factory('$zlFocusOn', ["$rootScope", "$timeout", function ($rootScope, $timeout) {
