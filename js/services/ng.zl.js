@@ -32,7 +32,7 @@ angular.module('ng.zl').factory('$zl', function ($mdDialog, $mdToast, $compile, 
             controller: function ($scope, config) {
                 $scope.config = config;
 
-                $scope.result ='';
+                $scope.result = '';
                 $scope.onCancel = function () {
                     $mdDialog.cancel();
                 };
@@ -135,6 +135,14 @@ angular.module('ng.zl').factory('$zl', function ($mdDialog, $mdToast, $compile, 
         return result;
     };
 
+    var time = {
+        str2date: function (dateStr) {
+            var d = dateStr.replace(/[-/:]/g, ' ').split(' ');
+            //具体到s
+            return new Date(d[0], (d[1] - 1), d[2], (d[3] || 0), (d[4] || 0), (d[5] || 0), (d[6] || 0));
+        }
+    };
+
     var _userInfo = null;
     var userInfo = {
         set: function (info) {
@@ -155,7 +163,8 @@ angular.module('ng.zl').factory('$zl', function ($mdDialog, $mdToast, $compile, 
         scroll: scroll,
         format: format,
         sha256: $zlSha256,
-        userInfo: userInfo
+        userInfo: userInfo,
+        time: time
     };
 
     // 虽然暴漏给外面。 但是涉及到ng的生命周期的都不能载控制台来调用。

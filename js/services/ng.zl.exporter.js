@@ -22,10 +22,6 @@ angular.module('ng.zl.exporter', []).factory('$zlExporter', function () {
         return result.join('\n');
     }
 
-    function saveCsv(csvStr){
-
-    }
-
     exporter.toCsv = function (name, data, header) {
         data = angular.copy(data);
         name = name || 'table.csv';

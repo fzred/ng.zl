@@ -21,11 +21,11 @@
     });
 
     gulp.task('release', function (cb) {
-        sequence('clean.before', ['annotate', 'templates'], 'concat', 'uglify', 'copy.css', 'uglifycss', 'clean.after', cb);
+        sequence('clean.before', ['annotate', 'templates'], 'concat', 'copy.compatibility', 'uglify', 'copy.css', 'uglifycss', 'clean.after', cb);
     });
 
     gulp.task('clean.before', function () {
-        del(['dist/*.js', 'dist/js', 'dist/*.css']);
+        del(['dist/*.js', 'dist/js', 'dist/*.css', 'dist/iconfont.*']);
     });
 
     gulp.task('annotate', function () {
@@ -46,10 +46,15 @@
     });
 
     gulp.task('concat', function () {
-        return gulp.src(['dist/js/*.js', 'dist/js/**/*.js' ])
+        return gulp.src(['dist/js/module.js', 'dist/js/module.pick.js', 'dist/js/**/*.js' ])
             .pipe(concat('ng.zl.js'))
             .pipe(gulp.dest('dist'));
 
+    });
+
+    gulp.task('copy.compatibility', function () {
+        return gulp.src(['dist/js/compatibility.js'])
+            .pipe(gulp.dest('dist'));
     });
 
     gulp.task('uglify', function () {
@@ -97,6 +102,7 @@
             'bower_components/angular-material/angular-material.js',
             'bower_components/FileSaver/FileSaver.min.js',
 
+            'js/compatibility.js',
             'js/common/uploadifive/jquery.uploadifive.min.js',
 
             'js/*.js',

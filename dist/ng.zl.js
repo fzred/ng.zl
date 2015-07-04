@@ -1,5 +1,33 @@
 angular.module('ng.zl', ['ng', 'ngSanitize','ngMaterial','ng.zl.sha256', 'ng.zl.templates']);
 angular.module('ng.zl.pick', ['ng.zl']);
+(function () {
+    'use strict';
+
+    var html = '<div class="jumbotron">' +
+        '<div class="container">' +
+        '<h1>深感抱歉！</h1>' +
+        '<p>我们暂时支持不了你的浏览器。</p>' +
+        '<p>为了更好的体验我们的产品，推荐使用以下浏览器！</p>' +
+        '<p>' +
+        '<a href="https://www.baidu.com/s?wd=chrome">Chrome <span class="text-success">(推荐)</span></a>' +
+        '<br/>' +
+        '<a href="https://www.baidu.com/s?wd=firefox">Firefox</a>' +
+        '<br/>' +
+        '<a href="https://www.baidu.com/s?wd=360">360浏览器（极速模式）</a>' +
+        '<a href="https://www.baidu.com/s?wd=360极速浏览器">360极速浏览器 </a>' +
+        '<br/>' +
+        '</p>' +
+        '<p>其他浏览器的极速模式 或 支持H5的浏览器</p>' +
+        '<p>ie系列不支持</p>' +
+        '</div>' +
+        '</div>';
+
+    var ua = window.navigator.userAgent;
+
+    if(!(ua.indexOf('AppleWebKit') > -1 || ua.indexOf('Gecko') > -1)){
+        document.body.innerHTML = html;
+    }
+})();
 angular.module("ng.zl.templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("views/apartment.pick.html","<div>\r\n    <md-autocomplete ng-if=\"!pickChips\" flex required\r\n                     md-selected-item=\"pick.ngModel\"\r\n                     md-search-text=\"searchText\"\r\n                     md-items=\"item in querySearch(searchText)\"\r\n                     md-no-cache=\"true\"\r\n                     md-delay=\"500\"\r\n                     md-item-text=\"item.apartmentName\"\r\n                     md-autoselect=\"true\"\r\n                     ng-disabled=\"!pickCommunityId\"\r\n                     md-floating-label=\"APARTMENT\">\r\n        <md-item-template>\r\n            <span md-highlight-text=\"searchText\">{{item.apartmentName}} </span>\r\n        </md-item-template>\r\n        <md-not-found>\r\n            No matches found\r\n        </md-not-found>\r\n    </md-autocomplete>\r\n\r\n\r\n    <md-chips ng-if=\"pickChips\" ng-model=\"pick.ngModel\" md-autocomplete-snap md-require-match>\r\n        <md-autocomplete\r\n                md-selected-item=\"selectedItem\"\r\n                md-search-text=\"searchText\"\r\n                md-items=\"item in querySearch(searchText)\"\r\n                md-no-cache=\"true\"\r\n                md-delay=\"500\"\r\n                md-item-text=\"item.apartmentName\"\r\n                md-autoselect=\"true\"\r\n                ng-disabled=\"!pickCommunityId\"\r\n                placeholder=\"APARTMENT\">\r\n            <md-item-template>\r\n                <span md-highlight-text=\"searchText\">{{item.apartmentName}}</span>\r\n            </md-item-template>\r\n            <md-not-found>\r\n                No matches found\r\n            </md-not-found>\r\n        </md-autocomplete>\r\n        <md-chip-template>\r\n        <span>\r\n          <strong>{{$chip.apartmentName}}</strong>\r\n        </span>\r\n        </md-chip-template>\r\n    </md-chips>\r\n</div>");
 $templateCache.put("views/building.pick.html","<div>\r\n    <md-autocomplete ng-if=\"!pickChips\" flex required\r\n                     md-selected-item=\"pick.ngModel\"\r\n                     md-search-text=\"searchText\"\r\n                     md-items=\"item in querySearch(searchText)\"\r\n                     md-no-cache=\"true\"\r\n                     md-delay=\"500\"\r\n                     md-item-text=\"item.buildingName\"\r\n                     md-autoselect=\"true\"\r\n                     ng-disabled=\"!pickCommunityId\"\r\n                     md-floating-label=\"BUILDING\">\r\n        <md-item-template>\r\n            <span md-highlight-text=\"searchText\">{{item.buildingName}} </span>\r\n        </md-item-template>\r\n        <md-not-found>\r\n            No matches found\r\n        </md-not-found>\r\n    </md-autocomplete>\r\n\r\n\r\n    <md-chips ng-if=\"pickChips\" ng-model=\"pick.ngModel\" md-autocomplete-snap md-require-match>\r\n        <md-autocomplete\r\n                md-selected-item=\"selectedItem\"\r\n                md-search-text=\"searchText\"\r\n                md-items=\"item in querySearch(searchText)\"\r\n                md-no-cache=\"true\"\r\n                md-delay=\"500\"\r\n                md-item-text=\"item.buildingName\"\r\n                md-autoselect=\"true\"\r\n                ng-disabled=\"!pickCommunityId\"\r\n                placeholder=\"BUILDING\">\r\n            <md-item-template>\r\n                <span md-highlight-text=\"searchText\">{{item.buildingName}}</span>\r\n            </md-item-template>\r\n            <md-not-found>\r\n                No matches found\r\n            </md-not-found>\r\n        </md-autocomplete>\r\n        <md-chip-template>\r\n        <span>\r\n          <strong>{{$chip.buildingName}}</strong>\r\n        </span>\r\n        </md-chip-template>\r\n    </md-chips>\r\n</div>");
 $templateCache.put("views/community.pick.html","<div>\r\n    <md-autocomplete ng-if=\"!pickChips\" flex required\r\n                     md-selected-item=\"pick.ngModel\"\r\n                     md-search-text=\"searchText\"\r\n                     md-items=\"item in querySearch(searchText)\"\r\n                     md-no-cache=\"true\"\r\n                     md-delay=\"500\"\r\n                     md-item-text=\"item.name\"\r\n                     md-autoselect=\"true\"\r\n                     ng-disabled=\"!pickCityId\"\r\n                     md-floating-label=\"COMMUNITY\">\r\n        <md-item-template>\r\n            <span md-highlight-text=\"searchText\">{{item.name}} </span>\r\n        </md-item-template>\r\n        <md-not-found>\r\n            No matches found\r\n        </md-not-found>\r\n    </md-autocomplete>\r\n\r\n\r\n    <md-chips ng-if=\"pickChips\" ng-model=\"pick.ngModel\" md-autocomplete-snap md-require-match>\r\n        <md-autocomplete\r\n                md-selected-item=\"selectedItem\"\r\n                md-search-text=\"searchText\"\r\n                md-items=\"item in querySearch(searchText)\"\r\n                md-no-cache=\"true\"\r\n                md-delay=\"500\"\r\n                md-item-text=\"item.name\"\r\n                md-autoselect=\"true\"\r\n                ng-disabled=\"!pickCityId\"\r\n                placeholder=\"COMMUNITY\">\r\n            <md-item-template>\r\n                <span md-highlight-text=\"searchText\">{{item.name}}</span>\r\n            </md-item-template>\r\n            <md-not-found>\r\n                No matches found\r\n            </md-not-found>\r\n        </md-autocomplete>\r\n        <md-chip-template>\r\n        <span>\r\n          <strong>{{$chip.name}}</strong>\r\n        </span>\r\n        </md-chip-template>\r\n    </md-chips>\r\n</div>");
@@ -12,588 +40,6 @@ $templateCache.put("views/prompt.html","<md-dialog>\r\n    <md-dialog-content>\r
 $templateCache.put("views/region.pick.html","<div>\r\n    <md-autocomplete ng-if=\"!pickChips\" flex required\r\n                     md-selected-item=\"pick.ngModel\"\r\n                     md-search-text=\"searchText\"\r\n                     md-items=\"item in querySearch(searchText)\"\r\n                     md-no-cache=\"true\"\r\n                     md-delay=\"500\"\r\n                     md-item-text=\"item.name\"\r\n                     md-autoselect=\"true\"\r\n                     ng-disabled=\"(needRegionParent && !regionParent)\"\r\n                     md-floating-label=\"{{name | uppercase}}\">\r\n        <md-item-template>\r\n            <span md-highlight-text=\"searchText\">{{item.name}} </span>\r\n            <small md-highlight-text=\"searchText\">({{item.path}})</small>\r\n        </md-item-template>\r\n        <md-not-found>\r\n            No matches found\r\n        </md-not-found>\r\n    </md-autocomplete>\r\n\r\n\r\n    <md-chips ng-if=\"pickChips\" ng-model=\"pick.ngModel\" md-autocomplete-snap md-require-match>\r\n        <md-autocomplete\r\n                md-selected-item=\"selectedItem\"\r\n                md-search-text=\"searchText\"\r\n                md-items=\"item in querySearch(searchText)\"\r\n                md-no-cache=\"true\"\r\n                md-delay=\"500\"\r\n                md-item-text=\"item.name\"\r\n                md-autoselect=\"true\"\r\n                ng-disabled=\"(needRegionParent && !regionParent)\"\r\n                placeholder=\"{{name | uppercase}}\">\r\n            <md-item-template>\r\n                <span md-highlight-text=\"searchText\">{{item.name}}</span>\r\n                <small md-highlight-text=\"searchText\">({{item.path}})</small>\r\n            </md-item-template>\r\n            <md-not-found>\r\n                No matches found\r\n            </md-not-found>\r\n        </md-autocomplete>\r\n        <md-chip-template>\r\n        <span>\r\n          <strong>{{$chip.name}}</strong><small>({{$chip.path}})</small>\r\n        </span>\r\n        </md-chip-template>\r\n    </md-chips>\r\n</div>");
 $templateCache.put("views/scroll.html","<div class=\"zl-scroll\">\r\n    <div ng-show=\"isShow\">\r\n    <md-button class=\"md-fab md-primary md-mini\" ng-click=\"onTop()\" ng-if=\"top\">\r\n        t\r\n    </md-button>\r\n\r\n    <md-button class=\"md-fab md-primary md-mini\" ng-click=\"onBottom()\" ng-if=\"bottom\">\r\n        b\r\n    </md-button>\r\n    </div>\r\n</div>");
 $templateCache.put("views/toast.html","<div class=\"zl-toast-container\">\r\n    <md-toast ng-repeat=\"t in list\" class=\"md-default-theme\">\r\n        <span ng-bind=\"t.word\"></span>\r\n    </md-toast>\r\n</div>");}]);
-angular.module('ng.zl.exporter', []).factory('$zlExporter', function () {
-    'use strict';
-
-    var exporter = {};
-
-
-    //var header = [{field: 'id', name: '编号'}];
-
-    function data2csv(data, header){
-        var result = [];
-
-        result.push(_.map(header, function (value) {
-            return value.name;
-        }));
-
-        angular.forEach(data, function (value) {
-            result.push(_.map(header, function (val) {
-                return value[val.field] + '';
-            }).join(','));
-        });
-
-        return result.join('\n');
-    }
-
-    function saveCsv(csvStr){
-
-    }
-
-    exporter.toCsv = function (name, data, header) {
-        data = angular.copy(data);
-        name = name || 'table.csv';
-        if(name.slice(-4) !== '.csv'){
-            name += '.csv';
-        }
-        var blob = new Blob([data2csv(data, header)], {type: 'text/csv;charset=utf-8'});
-        window.saveAs(blob, name);
-    };
-
-    return exporter;
-});
-angular.module('ng.zl').factory('$zlFocusOn', ["$rootScope", "$timeout", function ($rootScope, $timeout) {
-    'use strict';
-    return function (name) {
-        return $timeout(function () {
-            return $rootScope.$broadcast('zlFocusOn', name);
-        });
-    };
-}]);
-angular.module('ng.zl').factory('$zl', ["$mdDialog", "$mdToast", "$compile", "$rootScope", "$templateRequest", "$timeout", "$zlSha256", "$q", function ($mdDialog, $mdToast, $compile, $rootScope, $templateRequest, $timeout, $zlSha256, $q) {
-    'use strict';
-
-    var $container = $(document.body);
-
-    var alert = function (word, title, ev) {
-        var d = $mdDialog.alert().parent($container).title(title).content(word).ok('ok');
-        if (ev) {
-            d = d.targetEvent(ev);
-        }
-        return $mdDialog.show(d);
-    };
-    var confirm = function (word, title, ev, ok, cancel) {
-        ok = ok || 'ok';
-        cancel = cancel || 'cancel';
-        var d = $mdDialog.confirm().parent($container).title(title).content(word).ok(ok).cancel(cancel);
-        if (ev) {
-            d = d.targetEvent(ev);
-        }
-        return $mdDialog.show(d);
-    };
-    var prompt = function (word, title, ev, ok, cancel) {
-        ok = ok || 'ok';
-        cancel = cancel || 'cancel';
-        //var d = $mdDialog.confirm().parent($container).title(title).content(word + '<input type="text" />').ok(ok).cancel(cancel);
-        //if (ev) {
-        //    d = d.targetEvent(ev);
-        //}
-        return $mdDialog.show({
-            targetEvent: ev,
-            templateUrl: 'views/prompt.html',
-            controller: ["$scope", "config", function ($scope, config) {
-                $scope.config = config;
-
-                $scope.result ='';
-                $scope.onCancel = function () {
-                    $mdDialog.cancel();
-                };
-                $scope.onOk = function () {
-                    $mdDialog.hide($scope.result);
-                };
-            }],
-            locals: {
-                config: {
-                    title: title,
-                    content: word,
-                    ok: ok,
-                    cancel: cancel
-                }
-            }
-        });
-    };
-
-    var _$toast = null;
-    var _toastScope = $rootScope.$new();
-    _toastScope.list = [];
-    var toast = function (word, type, time) {
-        var def = $q.defer();
-
-        if (!_$toast) {
-            _$toast = true;
-            $templateRequest('views/toast.html').then(function (data) {
-                _$toast = $(data);
-                $(document.body).append(_$toast);
-                $compile(_$toast)(_toastScope);
-            });
-        }
-        var key = +new Date();
-        _toastScope.list.unshift({word: word, _key_: key});
-        $timeout(function () {
-            _toastScope.list.splice(_toastScope.list.indexOf(_.find(_toastScope.list, function (value) {
-                return value._key_ === key;
-            })), 1);
-            def.resolve({});
-        }, time || 4000);
-
-        return def.promise;
-    };
-
-    var _$progress = null;
-    var _progressScope = $rootScope.$new();
-    _progressScope.show = false;
-    var progress = {
-        start: function () {
-            if (!_$progress) {
-                _$progress = true;
-                $templateRequest('views/progress.html').then(function (data) {
-                    _$progress = $(data);
-                    $(document.body).append(_$progress);
-                    $compile(_$progress)(_progressScope);
-                });
-            }
-            _progressScope.show = true;
-        },
-        done: function () {
-            _progressScope.show = false;
-        }
-    };
-
-
-    var scroll = {
-        set: function (value) {
-            var _content = $('.site-content')[0];
-            _content.scrollTop = value;
-        },
-        top: function () {
-            scroll.set(0);
-        },
-        bottom: function () {
-            scroll.set($(document.body).height());
-        },
-        page: function () {
-            scroll.set(document.body.scrollTop + document.documentElement.clientHeight);
-        }
-    };
-
-    var format = function (str, data) {
-        var result = str;
-        if (arguments.length < 2) {
-            return result;
-        }
-
-        result = result.replace(/\{([\d\w\.]+)\}/g, function (key) {
-            var keys = arguments[1].split('.');
-            var r = null;
-            _.each(keys, function (value, index) {
-                if (index) {
-                    r = r[value];
-                } else {
-                    r = data[value];
-                }
-            });
-            return r;
-        });
-        return result;
-    };
-
-    var _userInfo = null;
-    var userInfo = {
-        set: function (info) {
-            _userInfo = info;
-        },
-        get: function () {
-            return _userInfo;
-        }
-    };
-
-
-    var ZL = {
-        alert: alert,
-        confirm: confirm,
-        prompt: prompt,
-        tips: toast,
-        progress: progress,
-        scroll: scroll,
-        format: format,
-        sha256: $zlSha256,
-        userInfo: userInfo
-    };
-
-    // 虽然暴漏给外面。 但是涉及到ng的生命周期的都不能载控制台来调用。
-    window.ZL = ZL;
-
-    return ZL;
-}]);
-angular.module('ng.zl.pick').factory('$zlPickService', ["$q", "$log", "$zl", function ($q, $log, $zl) {
-    'use strict';
-
-    var baseUrl = '/admin/';
-
-    function post(url, params) {
-        var def = $q.defer();
-        $.ajax({
-            url: url[0] === '/' ? url : (baseUrl + url),
-            type: 'post',
-            data: params,
-            dataType: 'json',
-            success: function (data) {
-                def.resolve(data);
-            },
-            error: function () {
-                def.reject('服务器错误');
-            }
-        });
-        return processPromise(def.promise);
-    }
-
-    function processPromise(promise) {
-        // 处理http
-        return promise.then(function (data) {
-            if (data.errorCode === 0 || data.errorCode === 200) {
-                return data.response || {}; // 兼容
-            } else {
-                return $q.reject((data.errorDescription || '未知错误') + '  errorCode:' + data.errorCode + '  version:' + data.version);
-            }
-        }, function (reason) {
-            return $q.reject(reason);
-        }).then(function (data) {
-            return data;
-        }, function (reason) {
-            // 错误提示
-            $zl.tips(reason);
-            return $q.reject(reason);
-        });
-    }
-
-    var dataService = {};
-
-    // region
-    dataService.getProvinceByWord = function (params) {
-        return post('/region/listRegionByKeyword', _.extend(params, {
-            scope: 1
-        }));
-    };
-    dataService.getCityByWord = function (params) {
-        return post('/region/listRegionByKeyword', _.extend(params, {
-            scope: 2
-        }));
-    };
-    dataService.getAreaByWord = function (params) {
-        return post('/region/listRegionByKeyword', _.extend(params, {
-            scope: 3
-        }));
-    };
-    // address
-    dataService.getCommunityByWord = function (params) {
-        return post('/address/searchCommunities', params);
-    };
-    dataService.getBuildingByWord = function (params) {
-        return post('/address/listBuildingsByKeyword', params);
-    };
-    dataService.getApartmentByWord = function (params) {
-        return post('/address/listApartmentsByKeyword', params);
-    };
-
-    // 在封装一层，打印交出去的数据
-    // 同时把params复制一份，避免干扰之前的数据
-
-    var packDataService = {};
-    _.each(dataService, function (value, key) {
-        packDataService[key] = function (params) {
-            return value.apply(this, [angular.copy(params)]).then(function (data) {
-                //$log.info('data.service info: ' + key);
-                //$log.info(data);
-                return angular.copy(data);
-            });
-        };
-    });
-
-    return packDataService;
-}]);
-angular.module('ng.zl.sha256', []).factory('$zlSha256', function () {
-    'use strict';
-    var sha256 = function (str) {
-        function rotateRight(n, x) {
-            return ((x >>> n) | (x << (32 - n)));
-        }
-
-        function choice(x, y, z) {
-            return ((x & y) ^ (~x & z));
-        }
-
-        function majority(x, y, z) {
-            return ((x & y) ^ (x & z) ^ (y & z));
-        }
-
-        function sha256_Sigma0(x) {
-            return (rotateRight(2, x) ^ rotateRight(13, x) ^ rotateRight(22, x));
-        }
-
-        function sha256_Sigma1(x) {
-            return (rotateRight(6, x) ^ rotateRight(11, x) ^ rotateRight(25, x));
-        }
-
-        function sha256_sigma0(x) {
-            return (rotateRight(7, x) ^ rotateRight(18, x) ^ (x >>> 3));
-        }
-
-        function sha256_sigma1(x) {
-            return (rotateRight(17, x) ^ rotateRight(19, x) ^ (x >>> 10));
-        }
-
-        function sha256_expand(W, j) {
-            return (W[j & 0x0f] += sha256_sigma1(W[(j + 14) & 0x0f]) + W[(j + 9) & 0x0f] +
-                sha256_sigma0(W[(j + 1) & 0x0f]));
-        }
-
-        /* Hash constant words K: */
-        var K256 = new Array(
-            0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5,
-            0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
-            0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3,
-            0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
-            0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc,
-            0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
-            0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7,
-            0xc6e00bf3, 0xd5a79147, 0x06ca6351, 0x14292967,
-            0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13,
-            0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85,
-            0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3,
-            0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070,
-            0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5,
-            0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,
-            0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208,
-            0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
-        );
-
-        /* global arrays */
-        var ihash, count, buffer;
-        var sha256_hex_digits = "0123456789abcdef";
-
-        /* Add 32-bit integers with 16-bit operations (bug in some JS-interpreters:
-         overflow) */
-        function safe_add(x, y) {
-            var lsw = (x & 0xffff) + (y & 0xffff);
-            var msw = (x >> 16) + (y >> 16) + (lsw >> 16);
-            return (msw << 16) | (lsw & 0xffff);
-        }
-
-        /* Initialise the SHA256 computation */
-        function sha256_init() {
-            ihash = new Array(8);
-            count = new Array(2);
-            buffer = new Array(64);
-            count[0] = count[1] = 0;
-            ihash[0] = 0x6a09e667;
-            ihash[1] = 0xbb67ae85;
-            ihash[2] = 0x3c6ef372;
-            ihash[3] = 0xa54ff53a;
-            ihash[4] = 0x510e527f;
-            ihash[5] = 0x9b05688c;
-            ihash[6] = 0x1f83d9ab;
-            ihash[7] = 0x5be0cd19;
-        }
-
-
-        /* Transform a 512-bit message block */
-        function sha256_transform() {
-            var a, b, c, d, e, f, g, h, T1, T2;
-            var W = new Array(16);
-
-            /* Initialize registers with the previous intermediate value */
-            a = ihash[0];
-            b = ihash[1];
-            c = ihash[2];
-            d = ihash[3];
-            e = ihash[4];
-            f = ihash[5];
-            g = ihash[6];
-            h = ihash[7];
-
-            /* make 32-bit words */
-            for (var i = 0; i < 16; i++)
-                W[i] = ((buffer[(i << 2) + 3]) | (buffer[(i << 2) + 2] << 8) | (buffer[(i << 2) + 1] << 16) | (buffer[i << 2] << 24));
-
-            for (var j = 0; j < 64; j++) {
-                T1 = h + sha256_Sigma1(e) + choice(e, f, g) + K256[j];
-                if (j < 16) T1 += W[j];
-                else T1 += sha256_expand(W, j);
-                T2 = sha256_Sigma0(a) + majority(a, b, c);
-                h = g;
-                g = f;
-                f = e;
-                e = safe_add(d, T1);
-                d = c;
-                c = b;
-                b = a;
-                a = safe_add(T1, T2);
-            }
-
-            /* Compute the current intermediate hash value */
-            ihash[0] += a;
-            ihash[1] += b;
-            ihash[2] += c;
-            ihash[3] += d;
-            ihash[4] += e;
-            ihash[5] += f;
-            ihash[6] += g;
-            ihash[7] += h;
-        }
-
-        /* Read the next chunk of data and update the SHA256 computation */
-        function sha256_update(data, inputLen) {
-            var i, index, curpos = 0;
-            /* Compute number of bytes mod 64 */
-            index = ((count[0] >> 3) & 0x3f);
-            var remainder = (inputLen & 0x3f);
-
-            /* Update number of bits */
-            if ((count[0] += (inputLen << 3)) < (inputLen << 3)) count[1]++;
-            count[1] += (inputLen >> 29);
-
-            /* Transform as many times as possible */
-            for (i = 0; i + 63 < inputLen; i += 64) {
-                for (var j = index; j < 64; j++)
-                    buffer[j] = data.charCodeAt(curpos++);
-                sha256_transform();
-                index = 0;
-            }
-
-            /* Buffer remaining input */
-            for (var j = 0; j < remainder; j++)
-                buffer[j] = data.charCodeAt(curpos++);
-        }
-
-        /* Finish the computation by operations such as padding */
-        function sha256_final() {
-            var index = ((count[0] >> 3) & 0x3f);
-            buffer[index++] = 0x80;
-            if (index <= 56) {
-                for (var i = index; i < 56; i++)
-                    buffer[i] = 0;
-            } else {
-                for (var i = index; i < 64; i++)
-                    buffer[i] = 0;
-                sha256_transform();
-                for (var i = 0; i < 56; i++)
-                    buffer[i] = 0;
-            }
-            buffer[56] = (count[1] >>> 24) & 0xff;
-            buffer[57] = (count[1] >>> 16) & 0xff;
-            buffer[58] = (count[1] >>> 8) & 0xff;
-            buffer[59] = count[1] & 0xff;
-            buffer[60] = (count[0] >>> 24) & 0xff;
-            buffer[61] = (count[0] >>> 16) & 0xff;
-            buffer[62] = (count[0] >>> 8) & 0xff;
-            buffer[63] = count[0] & 0xff;
-            sha256_transform();
-        }
-
-        /* Split the internal hash values into an array of bytes */
-        function sha256_encode_bytes() {
-            var j = 0;
-            var output = new Array(32);
-            for (var i = 0; i < 8; i++) {
-                output[j++] = ((ihash[i] >>> 24) & 0xff);
-                output[j++] = ((ihash[i] >>> 16) & 0xff);
-                output[j++] = ((ihash[i] >>> 8) & 0xff);
-                output[j++] = (ihash[i] & 0xff);
-            }
-            return output;
-        }
-
-        /* Get the internal hash as a hex string */
-        function sha256_encode_hex() {
-            var output = new String();
-            for (var i = 0; i < 8; i++) {
-                for (var j = 28; j >= 0; j -= 4)
-                    output += sha256_hex_digits.charAt((ihash[i] >>> j) & 0x0f);
-            }
-            return output;
-        }
-
-        /* Main function: returns a hex string representing the SHA256 value of the
-         given data */
-        function sha256_digest(data) {
-            sha256_init();
-            sha256_update(data, data.length);
-            sha256_final();
-            return sha256_encode_hex();
-        }
-
-        /* test if the JS-interpreter is working properly */
-        function sha256_self_test() {
-            return sha256_digest("message digest") ==
-                "f7846f55cf23e14eebeab5b4e1550cad5b509e3348fbc4efa3a1413d393cb650";
-        }
-
-        return sha256_digest(str);
-    };
-    return sha256;
-});
-angular.module('ng.zl.uploader', []).service('$zlUploader', ["$log", "$q", function ($log, $q) {
-    'use strict';
-
-    // 不能采用 promise 的形式， 因为会有多次上传。 而promise 只一次
-    var files = [];
-
-    var Upload = function (container, config) {
-        var def = $q.defer();
-
-        var $container = $(container);
-        var _config = $.extend({
-            //width: 82,
-            height: 37,
-            buttonText: '上传',
-            buttonClass: 'zl-btn-upload',
-            removeCompleted: true
-            //onUploadComplete: function (file, data) {
-            //    data = angular.fromJson(data);
-            //    if (data.errorCode === 200) {
-            //        def.resolve(file);
-            //    }else{
-            //        def.reject(data.errorDescription || '未知错误');
-            //    }
-            //}
-        }, config);
-
-        if ($container[0].id === '') {
-            throw('container id ?');
-        } else if (_config.url) {
-            throw(' url ?');
-        } else {
-            $container.uploadifive(_config);
-        }
-
-        return def.promise;
-    };
-
-
-    var fileUpload = function(container, config) {
-        config = $.extend({
-            fileObjName: 'attachment',
-            buttonText: '上传文件',
-            multi: false
-        }, config);
-
-        return Upload(container, config);
-    };
-    
-    var imgUpload = function (container, config) {
-        config = $.extend({
-            fileObjName: 'resFiles',
-            buttonText: '上传图片',
-            multi: false
-        }, config);
-        return Upload(container, config);
-    };
-
-    return {
-        fileUpload: fileUpload,
-        imgUpload: imgUpload
-    };
-}]);
 angular.module('ng.zl.pick').directive('zlApartmentPick', ["$zlPickService", function ($zlPickService) {
     'use strict';
 
@@ -1181,6 +627,593 @@ angular.module('ng.zl').directive('zlScroll', ["$zl", "$mdMedia", function ($zl,
 
             $scope.isShow = $mdMedia('gt-md');
         }]
+    };
+}]);
+angular.module('ng.zl.exporter', []).factory('$zlExporter', function () {
+    'use strict';
+
+    var exporter = {};
+
+
+    //var header = [{field: 'id', name: '编号'}];
+
+    function data2csv(data, header){
+        var result = [];
+
+        result.push(_.map(header, function (value) {
+            return value.name;
+        }));
+
+        angular.forEach(data, function (value) {
+            result.push(_.map(header, function (val) {
+                return value[val.field] + '';
+            }).join(','));
+        });
+
+        return result.join('\n');
+    }
+
+    exporter.toCsv = function (name, data, header) {
+        data = angular.copy(data);
+        name = name || 'table.csv';
+        if(name.slice(-4) !== '.csv'){
+            name += '.csv';
+        }
+        var blob = new Blob([data2csv(data, header)], {type: 'text/csv;charset=utf-8'});
+        window.saveAs(blob, name);
+    };
+
+    return exporter;
+});
+angular.module('ng.zl').factory('$zlFocusOn', ["$rootScope", "$timeout", function ($rootScope, $timeout) {
+    'use strict';
+    return function (name) {
+        return $timeout(function () {
+            return $rootScope.$broadcast('zlFocusOn', name);
+        });
+    };
+}]);
+angular.module('ng.zl').factory('$zl', ["$mdDialog", "$mdToast", "$compile", "$rootScope", "$templateRequest", "$timeout", "$zlSha256", "$q", function ($mdDialog, $mdToast, $compile, $rootScope, $templateRequest, $timeout, $zlSha256, $q) {
+    'use strict';
+
+    var $container = $(document.body);
+
+    var alert = function (word, title, ev) {
+        var d = $mdDialog.alert().parent($container).title(title).content(word).ok('ok');
+        if (ev) {
+            d = d.targetEvent(ev);
+        }
+        return $mdDialog.show(d);
+    };
+    var confirm = function (word, title, ev, ok, cancel) {
+        ok = ok || 'ok';
+        cancel = cancel || 'cancel';
+        var d = $mdDialog.confirm().parent($container).title(title).content(word).ok(ok).cancel(cancel);
+        if (ev) {
+            d = d.targetEvent(ev);
+        }
+        return $mdDialog.show(d);
+    };
+    var prompt = function (word, title, ev, ok, cancel) {
+        ok = ok || 'ok';
+        cancel = cancel || 'cancel';
+        //var d = $mdDialog.confirm().parent($container).title(title).content(word + '<input type="text" />').ok(ok).cancel(cancel);
+        //if (ev) {
+        //    d = d.targetEvent(ev);
+        //}
+        return $mdDialog.show({
+            targetEvent: ev,
+            templateUrl: 'views/prompt.html',
+            controller: ["$scope", "config", function ($scope, config) {
+                $scope.config = config;
+
+                $scope.result = '';
+                $scope.onCancel = function () {
+                    $mdDialog.cancel();
+                };
+                $scope.onOk = function () {
+                    $mdDialog.hide($scope.result);
+                };
+            }],
+            locals: {
+                config: {
+                    title: title,
+                    content: word,
+                    ok: ok,
+                    cancel: cancel
+                }
+            }
+        });
+    };
+
+    var _$toast = null;
+    var _toastScope = $rootScope.$new();
+    _toastScope.list = [];
+    var toast = function (word, type, time) {
+        var def = $q.defer();
+
+        if (!_$toast) {
+            _$toast = true;
+            $templateRequest('views/toast.html').then(function (data) {
+                _$toast = $(data);
+                $(document.body).append(_$toast);
+                $compile(_$toast)(_toastScope);
+            });
+        }
+        var key = +new Date();
+        _toastScope.list.unshift({word: word, _key_: key});
+        $timeout(function () {
+            _toastScope.list.splice(_toastScope.list.indexOf(_.find(_toastScope.list, function (value) {
+                return value._key_ === key;
+            })), 1);
+            def.resolve({});
+        }, time || 4000);
+
+        return def.promise;
+    };
+
+    var _$progress = null;
+    var _progressScope = $rootScope.$new();
+    _progressScope.show = false;
+    var progress = {
+        start: function () {
+            if (!_$progress) {
+                _$progress = true;
+                $templateRequest('views/progress.html').then(function (data) {
+                    _$progress = $(data);
+                    $(document.body).append(_$progress);
+                    $compile(_$progress)(_progressScope);
+                });
+            }
+            _progressScope.show = true;
+        },
+        done: function () {
+            _progressScope.show = false;
+        }
+    };
+
+
+    var scroll = {
+        set: function (value) {
+            var _content = $('.site-content')[0];
+            _content.scrollTop = value;
+        },
+        top: function () {
+            scroll.set(0);
+        },
+        bottom: function () {
+            scroll.set($(document.body).height());
+        },
+        page: function () {
+            scroll.set(document.body.scrollTop + document.documentElement.clientHeight);
+        }
+    };
+
+    var format = function (str, data) {
+        var result = str;
+        if (arguments.length < 2) {
+            return result;
+        }
+
+        result = result.replace(/\{([\d\w\.]+)\}/g, function (key) {
+            var keys = arguments[1].split('.');
+            var r = null;
+            _.each(keys, function (value, index) {
+                if (index) {
+                    r = r[value];
+                } else {
+                    r = data[value];
+                }
+            });
+            return r;
+        });
+        return result;
+    };
+
+    var time = {
+        str2date: function (dateStr) {
+            var d = dateStr.replace(/[-/:]/g, ' ').split(' ');
+            //具体到s
+            return new Date(d[0], (d[1] - 1), d[2], (d[3] || 0), (d[4] || 0), (d[5] || 0), (d[6] || 0));
+        }
+    };
+
+    var _userInfo = null;
+    var userInfo = {
+        set: function (info) {
+            _userInfo = info;
+        },
+        get: function () {
+            return _userInfo;
+        }
+    };
+
+
+    var ZL = {
+        alert: alert,
+        confirm: confirm,
+        prompt: prompt,
+        tips: toast,
+        progress: progress,
+        scroll: scroll,
+        format: format,
+        sha256: $zlSha256,
+        userInfo: userInfo,
+        time: time
+    };
+
+    // 虽然暴漏给外面。 但是涉及到ng的生命周期的都不能载控制台来调用。
+    window.ZL = ZL;
+
+    return ZL;
+}]);
+angular.module('ng.zl.pick').factory('$zlPickService', ["$q", "$log", "$zl", function ($q, $log, $zl) {
+    'use strict';
+
+    var baseUrl = '/admin/';
+
+    function post(url, params) {
+        var def = $q.defer();
+        $.ajax({
+            url: url[0] === '/' ? url : (baseUrl + url),
+            type: 'post',
+            data: params,
+            dataType: 'json',
+            success: function (data) {
+                def.resolve(data);
+            },
+            error: function () {
+                def.reject('服务器错误');
+            }
+        });
+        return processPromise(def.promise);
+    }
+
+    function processPromise(promise) {
+        // 处理http
+        return promise.then(function (data) {
+            if (data.errorCode === 0 || data.errorCode === 200) {
+                return data.response || {}; // 兼容
+            } else {
+                return $q.reject((data.errorDescription || '未知错误') + '  errorCode:' + data.errorCode + '  version:' + data.version);
+            }
+        }, function (reason) {
+            return $q.reject(reason);
+        }).then(function (data) {
+            return data;
+        }, function (reason) {
+            // 错误提示
+            $zl.tips(reason);
+            return $q.reject(reason);
+        });
+    }
+
+    var dataService = {};
+
+    // region
+    dataService.getProvinceByWord = function (params) {
+        return post('/region/listRegionByKeyword', _.extend(params, {
+            scope: 1
+        }));
+    };
+    dataService.getCityByWord = function (params) {
+        return post('/region/listRegionByKeyword', _.extend(params, {
+            scope: 2
+        }));
+    };
+    dataService.getAreaByWord = function (params) {
+        return post('/region/listRegionByKeyword', _.extend(params, {
+            scope: 3
+        }));
+    };
+    // address
+    dataService.getCommunityByWord = function (params) {
+        return post('/address/searchCommunities', params);
+    };
+    dataService.getBuildingByWord = function (params) {
+        return post('/address/listBuildingsByKeyword', params);
+    };
+    dataService.getApartmentByWord = function (params) {
+        return post('/address/listApartmentsByKeyword', params);
+    };
+
+    // 在封装一层，打印交出去的数据
+    // 同时把params复制一份，避免干扰之前的数据
+
+    var packDataService = {};
+    _.each(dataService, function (value, key) {
+        packDataService[key] = function (params) {
+            return value.apply(this, [angular.copy(params)]).then(function (data) {
+                //$log.info('data.service info: ' + key);
+                //$log.info(data);
+                return angular.copy(data);
+            });
+        };
+    });
+
+    return packDataService;
+}]);
+angular.module('ng.zl.sha256', []).factory('$zlSha256', function () {
+    'use strict';
+    var sha256 = function (str) {
+        function rotateRight(n, x) {
+            return ((x >>> n) | (x << (32 - n)));
+        }
+
+        function choice(x, y, z) {
+            return ((x & y) ^ (~x & z));
+        }
+
+        function majority(x, y, z) {
+            return ((x & y) ^ (x & z) ^ (y & z));
+        }
+
+        function sha256_Sigma0(x) {
+            return (rotateRight(2, x) ^ rotateRight(13, x) ^ rotateRight(22, x));
+        }
+
+        function sha256_Sigma1(x) {
+            return (rotateRight(6, x) ^ rotateRight(11, x) ^ rotateRight(25, x));
+        }
+
+        function sha256_sigma0(x) {
+            return (rotateRight(7, x) ^ rotateRight(18, x) ^ (x >>> 3));
+        }
+
+        function sha256_sigma1(x) {
+            return (rotateRight(17, x) ^ rotateRight(19, x) ^ (x >>> 10));
+        }
+
+        function sha256_expand(W, j) {
+            return (W[j & 0x0f] += sha256_sigma1(W[(j + 14) & 0x0f]) + W[(j + 9) & 0x0f] +
+                sha256_sigma0(W[(j + 1) & 0x0f]));
+        }
+
+        /* Hash constant words K: */
+        var K256 = new Array(
+            0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5,
+            0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
+            0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3,
+            0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
+            0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc,
+            0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
+            0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7,
+            0xc6e00bf3, 0xd5a79147, 0x06ca6351, 0x14292967,
+            0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13,
+            0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85,
+            0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3,
+            0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070,
+            0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5,
+            0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,
+            0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208,
+            0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
+        );
+
+        /* global arrays */
+        var ihash, count, buffer;
+        var sha256_hex_digits = "0123456789abcdef";
+
+        /* Add 32-bit integers with 16-bit operations (bug in some JS-interpreters:
+         overflow) */
+        function safe_add(x, y) {
+            var lsw = (x & 0xffff) + (y & 0xffff);
+            var msw = (x >> 16) + (y >> 16) + (lsw >> 16);
+            return (msw << 16) | (lsw & 0xffff);
+        }
+
+        /* Initialise the SHA256 computation */
+        function sha256_init() {
+            ihash = new Array(8);
+            count = new Array(2);
+            buffer = new Array(64);
+            count[0] = count[1] = 0;
+            ihash[0] = 0x6a09e667;
+            ihash[1] = 0xbb67ae85;
+            ihash[2] = 0x3c6ef372;
+            ihash[3] = 0xa54ff53a;
+            ihash[4] = 0x510e527f;
+            ihash[5] = 0x9b05688c;
+            ihash[6] = 0x1f83d9ab;
+            ihash[7] = 0x5be0cd19;
+        }
+
+
+        /* Transform a 512-bit message block */
+        function sha256_transform() {
+            var a, b, c, d, e, f, g, h, T1, T2;
+            var W = new Array(16);
+
+            /* Initialize registers with the previous intermediate value */
+            a = ihash[0];
+            b = ihash[1];
+            c = ihash[2];
+            d = ihash[3];
+            e = ihash[4];
+            f = ihash[5];
+            g = ihash[6];
+            h = ihash[7];
+
+            /* make 32-bit words */
+            for (var i = 0; i < 16; i++)
+                W[i] = ((buffer[(i << 2) + 3]) | (buffer[(i << 2) + 2] << 8) | (buffer[(i << 2) + 1] << 16) | (buffer[i << 2] << 24));
+
+            for (var j = 0; j < 64; j++) {
+                T1 = h + sha256_Sigma1(e) + choice(e, f, g) + K256[j];
+                if (j < 16) T1 += W[j];
+                else T1 += sha256_expand(W, j);
+                T2 = sha256_Sigma0(a) + majority(a, b, c);
+                h = g;
+                g = f;
+                f = e;
+                e = safe_add(d, T1);
+                d = c;
+                c = b;
+                b = a;
+                a = safe_add(T1, T2);
+            }
+
+            /* Compute the current intermediate hash value */
+            ihash[0] += a;
+            ihash[1] += b;
+            ihash[2] += c;
+            ihash[3] += d;
+            ihash[4] += e;
+            ihash[5] += f;
+            ihash[6] += g;
+            ihash[7] += h;
+        }
+
+        /* Read the next chunk of data and update the SHA256 computation */
+        function sha256_update(data, inputLen) {
+            var i, index, curpos = 0;
+            /* Compute number of bytes mod 64 */
+            index = ((count[0] >> 3) & 0x3f);
+            var remainder = (inputLen & 0x3f);
+
+            /* Update number of bits */
+            if ((count[0] += (inputLen << 3)) < (inputLen << 3)) count[1]++;
+            count[1] += (inputLen >> 29);
+
+            /* Transform as many times as possible */
+            for (i = 0; i + 63 < inputLen; i += 64) {
+                for (var j = index; j < 64; j++)
+                    buffer[j] = data.charCodeAt(curpos++);
+                sha256_transform();
+                index = 0;
+            }
+
+            /* Buffer remaining input */
+            for (var j = 0; j < remainder; j++)
+                buffer[j] = data.charCodeAt(curpos++);
+        }
+
+        /* Finish the computation by operations such as padding */
+        function sha256_final() {
+            var index = ((count[0] >> 3) & 0x3f);
+            buffer[index++] = 0x80;
+            if (index <= 56) {
+                for (var i = index; i < 56; i++)
+                    buffer[i] = 0;
+            } else {
+                for (var i = index; i < 64; i++)
+                    buffer[i] = 0;
+                sha256_transform();
+                for (var i = 0; i < 56; i++)
+                    buffer[i] = 0;
+            }
+            buffer[56] = (count[1] >>> 24) & 0xff;
+            buffer[57] = (count[1] >>> 16) & 0xff;
+            buffer[58] = (count[1] >>> 8) & 0xff;
+            buffer[59] = count[1] & 0xff;
+            buffer[60] = (count[0] >>> 24) & 0xff;
+            buffer[61] = (count[0] >>> 16) & 0xff;
+            buffer[62] = (count[0] >>> 8) & 0xff;
+            buffer[63] = count[0] & 0xff;
+            sha256_transform();
+        }
+
+        /* Split the internal hash values into an array of bytes */
+        function sha256_encode_bytes() {
+            var j = 0;
+            var output = new Array(32);
+            for (var i = 0; i < 8; i++) {
+                output[j++] = ((ihash[i] >>> 24) & 0xff);
+                output[j++] = ((ihash[i] >>> 16) & 0xff);
+                output[j++] = ((ihash[i] >>> 8) & 0xff);
+                output[j++] = (ihash[i] & 0xff);
+            }
+            return output;
+        }
+
+        /* Get the internal hash as a hex string */
+        function sha256_encode_hex() {
+            var output = new String();
+            for (var i = 0; i < 8; i++) {
+                for (var j = 28; j >= 0; j -= 4)
+                    output += sha256_hex_digits.charAt((ihash[i] >>> j) & 0x0f);
+            }
+            return output;
+        }
+
+        /* Main function: returns a hex string representing the SHA256 value of the
+         given data */
+        function sha256_digest(data) {
+            sha256_init();
+            sha256_update(data, data.length);
+            sha256_final();
+            return sha256_encode_hex();
+        }
+
+        /* test if the JS-interpreter is working properly */
+        function sha256_self_test() {
+            return sha256_digest("message digest") ==
+                "f7846f55cf23e14eebeab5b4e1550cad5b509e3348fbc4efa3a1413d393cb650";
+        }
+
+        return sha256_digest(str);
+    };
+    return sha256;
+});
+angular.module('ng.zl.uploader', []).service('$zlUploader', ["$log", "$q", function ($log, $q) {
+    'use strict';
+
+    // 不能采用 promise 的形式， 因为会有多次上传。 而promise 只一次
+    var files = [];
+
+    var Upload = function (container, config) {
+        var def = $q.defer();
+
+        var $container = $(container);
+        var _config = $.extend({
+            //width: 82,
+            height: 37,
+            buttonText: '上传',
+            buttonClass: 'zl-btn-upload',
+            removeCompleted: true
+            //onUploadComplete: function (file, data) {
+            //    data = angular.fromJson(data);
+            //    if (data.errorCode === 200) {
+            //        def.resolve(file);
+            //    }else{
+            //        def.reject(data.errorDescription || '未知错误');
+            //    }
+            //}
+        }, config);
+
+        if ($container[0].id === '') {
+            throw('container id ?');
+        } else if (_config.url) {
+            throw(' url ?');
+        } else {
+            $container.uploadifive(_config);
+        }
+
+        return def.promise;
+    };
+
+
+    var fileUpload = function(container, config) {
+        config = $.extend({
+            fileObjName: 'attachment',
+            buttonText: '上传文件',
+            multi: false
+        }, config);
+
+        return Upload(container, config);
+    };
+    
+    var imgUpload = function (container, config) {
+        config = $.extend({
+            fileObjName: 'resFiles',
+            buttonText: '上传图片',
+            multi: false
+        }, config);
+        return Upload(container, config);
+    };
+
+    return {
+        fileUpload: fileUpload,
+        imgUpload: imgUpload
     };
 }]);
 /*
