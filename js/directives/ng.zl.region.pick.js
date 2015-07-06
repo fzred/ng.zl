@@ -1,49 +1,28 @@
-angular.module('ng.zl.pick').directive('zlRegionPick', function ($zlPickService) {
+angular.module('ng.zl.pick').directive('zlRegionPick', function () {
     'use strict';
-
-    // 有点复杂，不写注释了
 
     return {
         restrict: 'A',
         replace: true,
         scope: {
-            regionParent: '=',
-            ngModel: '=',
-            pickChips: '='
+            config: '='
         },
         templateUrl: 'views/region.pick.html',
         controller: function ($scope, $attrs) {
-            $scope.pickChips = $scope.pickChips || false;
 
-            // 传引用过去
-            $scope.pick = {
-                ngModel: $scope.pickChips ? [] : null
-            };
-
-            $scope.$watch('pick.ngModel', function(newValue){
-                $scope.ngModel = newValue;
-            });
-
-            $scope.needRegionParent = $attrs.regionParent !== undefined;
-            $scope.name = $attrs.zlRegionPick;
-
-            var api = '';
-            if ($scope.name === 'province') {
-                api = 'getProvinceByWord';
-            } else if ($scope.name === 'city') {
-                api = 'getCityByWord';
-            } else if ($scope.name === 'area') {
-                api = 'getAreaByWord';
-            }
+            $scope.config = $.extend({
+                chips: false,
+                disable: false,
+                model: null,
+                getData: function(){},
+                label: 'pick'
+            }, $scope.config);
 
             $scope.querySearch = function (searchText) {
-                return $zlPickService[api]({
-                    parentId: $scope.regionParent && $scope.regionParent.id || null,
-                    keyword: searchText
-                }).then(function (data) {
-                    if ($scope.pickChips) {
+                return $scope.config.getData(searchText).then(function (data) {
+                    if ($scope.config.chips) {
                         return _.filter(data, function (value) {
-                            return !isExist(value, $scope.pick.ngModel);
+                            return !isExist(value, $scope.config.model);
                         });
                     }
                     return data;

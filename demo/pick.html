@@ -11,29 +11,34 @@
     <!-- endinject -->
 </head>
 <body ng-controller="DemoController">
-<a href="pick.html">pick.html</a>
 <div>
-    <div ng-controller="DialogController">
-        <md-button ng-click="onAlert($event)">alert</md-button>
-        <md-button ng-click="onConfirm($event)">confirm</md-button>
-        <md-button ng-click="onPrompt($event)">prompt</md-button>
+    <div layout="row">
 
-        <md-button ng-click="onToast()">toast</md-button>
-        <md-button ng-click="onProgressStart()">progress start</md-button>
-        <md-button ng-click="onProgressDone()">progress done</md-button>
+        <div flex zl-region-pick region-label="province" ng-model="province" on-region-items="getData"></div>
+
+        <div flex zl-region-pick region-label="city" region-parent="province" ng-model="city" on-region-items="getData"></div>
+
+        <div flex zl-region-pick region-label="area" region-parent="city" ng-model="area" on-region-items="getData"></div>
     </div>
 
-    <div ng-controller="GridController">
-        <md-button class="md-raised" ng-click="onExport()">export to csv</md-button>
-        <div zl-grid config="gridData"></div>
+    <div flex zl-region-pick="city" pick-chips="true" ng-model="citys" region-parent="province"></div>
+
+
+    <div layout="row">
+        <div flex zl-community-pick pick-city-id="5636106" ng-model="community"></div>
+
+        <div flex zl-building-pick pick-community-id="community.id" ng-model="building"></div>
+
+        <div flex zl-apartment-pick pick-community-id="community.id" pick-building-name="building.buildingName" ng-model="apartment"></div>
     </div>
 
-    <button type="button" id="uploadFile">Upload</button>
+    <div flex zl-community-pick pick-city-id="5636106" pick-chips="true" ng-model="communitys"></div>
 
-    <div zl-scroll="scroll-top scroll-bottom"></div>
+    <div flex zl-building-pick pick-community-id="14" pick-chips="true" ng-model="buildings"></div>
 
+    <div flex zl-apartment-pick pick-community-id="14" pick-building-name="'1-1'" pick-chips="true"
+         ng-model="apartments"></div>
 </div>
-
 
 <!-- inject:js -->
 <script src="../bower_components/jquery/dist/jquery.js"></script>
@@ -64,7 +69,7 @@
 <script src="../js/services/ng.zl.sha256.js"></script>
 <script src="../js/services/ng.zl.uploader.js"></script>
 <script src="templates.min.js"></script>
-<script src="app.js"></script>
+<script src="pick.js"></script>
 <!-- endinject -->
 
 </body>
