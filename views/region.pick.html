@@ -1,5 +1,5 @@
 <div>
-    <md-autocomplete ng-if="!config.chips" flex required
+    <md-autocomplete ng-if="!pickChips" flex required
                      md-selected-item="pick.ngModel"
                      md-search-text="searchText"
                      md-items="item in querySearch(searchText)"
@@ -8,7 +8,7 @@
                      md-item-text="item.name"
                      md-autoselect="true"
                      ng-disabled="(needRegionParent && !regionParent)"
-                     md-floating-label="{{regionLabel | uppercase}}">
+                     md-floating-label="{{name | uppercase}}">
         <md-item-template>
             <span md-highlight-text="searchText">{{item.name}} </span>
             <small md-highlight-text="searchText">({{item.path}})</small>
@@ -29,7 +29,7 @@
                 md-item-text="item.name"
                 md-autoselect="true"
                 ng-disabled="(needRegionParent && !regionParent)"
-                placeholder="{{regionLabel | uppercase}}">
+                placeholder="{{name | uppercase}}">
             <md-item-template>
                 <span md-highlight-text="searchText">{{item.name}}</span>
                 <small md-highlight-text="searchText">({{item.path}})</small>
