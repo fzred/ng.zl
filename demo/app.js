@@ -71,7 +71,7 @@ angular.module('myApp', ['ng.zl', 'ng.zl.grid', 'ng.zl.uploader', 'ng.zl.pick'])
         enableSelect: true,
         enableExport: true,
         columns: [
-            {field: 'id', name: 'id', unexport: true, render: renderId},
+            {field: 'id', name: 'id', export: false, render: renderId},
             {field: 'name', name: '名字', edit: true, editType: 'input', afterEdit: afterEdit},
             {
                 field: 'gender',
@@ -81,7 +81,7 @@ angular.module('myApp', ['ng.zl', 'ng.zl.grid', 'ng.zl.uploader', 'ng.zl.pick'])
                 editData: editData,
                 afterEdit: afterEditGender
             },
-            {field: 'isOk', name: '是否', edit: true, editType: 'switch', afterEdit: afterEditOk}
+            {field: 'isOk', name: '是否', export: exportIsOk, edit: true, editType: 'switch', afterEdit: afterEditOk}
         ],
         actions: [{
             type: 'btn',
@@ -99,6 +99,10 @@ angular.module('myApp', ['ng.zl', 'ng.zl.grid', 'ng.zl.uploader', 'ng.zl.pick'])
 
     $scope.editData = editData;
     $scope.select = null;
+
+    function exportIsOk(value){
+        return value ? '是': '否';
+    }
 
     function editData() {
         var def = $q.defer();

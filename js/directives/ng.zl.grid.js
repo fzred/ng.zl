@@ -107,11 +107,19 @@ angular.module('ng.zl.grid', ['ng.zl', 'ng.zl.exporter']).directive('zlGrid', fu
 
             $scope.onExportToCSV = function () {
 
-                $zlExporter.toCsv('table', $scope.config.data, _.map(_.filter($scope.config.columns, function (value) {
-                    return !value.unexport;
+                var exportColumns = _.map(_.filter($scope.config.columns, function (value) {
+                    return value.export !== false;
                 }), function (value) {
-                    return {field: value.field, name: value.name};
-                }));
+                    return {field: value.field, name: value.name, export: value.export};
+                });
+                _.each(exportColumns, function (value) {
+                    if(_.isFunction(value.export)){
+                        _.each($scope.config.data, function (val, i) {
+                           val[value.field] = value.export(val[value.field]);
+                        });
+                    }
+                });
+                $zlExporter.toCsv('table', $scope.config.data, exportColumns);
             };
         }
     };
