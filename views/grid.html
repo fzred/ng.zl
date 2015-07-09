@@ -42,7 +42,7 @@
         <md-button class="md-raised" ng-click="getData()" ng-if="config.next">More</md-button>
         <md-button class="md-raised" ng-if="!config.next" ng-disabled="true">No More</md-button>
         <div flex ng-if="config.enableSelect && config.actions.length > 0">
-            <md-button ng-repeat="act in config.actions" class="md-raised {{act.className}}" ng-bind="act.html"
+            <md-button ng-repeat="act in config.actions" ng-if="act.batch" class="md-raised {{act.className}}" ng-bind="act.html"
                        ng-click="onBatch(act, $event)"></md-button>
         </div>
         <div flex layout="row" layout-align="end">

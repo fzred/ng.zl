@@ -71,7 +71,7 @@ angular.module('myApp', ['ng.zl', 'ng.zl.grid', 'ng.zl.uploader', 'ng.zl.pick'])
         enableSelect: true,
         enableExport: true,
         columns: [
-            {field: 'id', name: 'id', export: false, render: renderId},
+            {field: 'id', name: 'id', render: renderId},
             {field: 'name', name: '名字', edit: true, editType: 'input', afterEdit: afterEdit},
             {
                 field: 'gender',
