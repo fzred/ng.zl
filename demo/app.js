@@ -70,6 +70,7 @@ angular.module('myApp', ['ng.zl', 'ng.zl.grid', 'ng.zl.uploader', 'ng.zl.pick'])
     $scope.gridData = {
         enableSelect: true,
         enableExport: true,
+        exportOptions: {xls: true},
         columns: [
             {field: 'id', name: 'id', render: renderId},
             {field: 'name', name: '名字', edit: true, editType: 'input', afterEdit: afterEdit},

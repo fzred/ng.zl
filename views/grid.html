@@ -21,13 +21,16 @@
                 <span ng-if="!col.edit && !col.render" ng-bind="data[col.field]" style="{{col.style}}"></span>
 
                 <div ng-if="col.edit && col.editType === 'input'">
-                    <div zl-grid-edit grid-model="data[col.field]" grid-after-edit="onAfterEdit(value, col, data)"></div>
+                    <div zl-grid-edit grid-model="data[col.field]"
+                         grid-after-edit="onAfterEdit(value, col, data)"></div>
                 </div>
                 <div ng-if="col.edit && col.editType === 'select'">
-                    <div zl-grid-edit-select grid-model="data[col.field]" grid-edit-type="col.editType" grid-edit-data="col.editData()" grid-after-edit="onAfterEdit(value, col, data)"></div>
+                    <div zl-grid-edit-select grid-model="data[col.field]" grid-edit-type="col.editType"
+                         grid-edit-data="col.editData()" grid-after-edit="onAfterEdit(value, col, data)"></div>
                 </div>
                 <div ng-if="col.edit && col.editType === 'switch'">
-                    <div zl-grid-edit-switch grid-model="data[col.field]" grid-after-edit="onAfterEdit(value, col, data)"></div>
+                    <div zl-grid-edit-switch grid-model="data[col.field]"
+                         grid-after-edit="onAfterEdit(value, col, data)"></div>
                 </div>
             </td>
 
@@ -42,12 +45,13 @@
         <md-button class="md-raised" ng-click="getData()" ng-if="config.next">More</md-button>
         <md-button class="md-raised" ng-if="!config.next" ng-disabled="true">No More</md-button>
         <div flex ng-if="config.enableSelect && config.actions.length > 0">
-            <md-button ng-repeat="act in config.actions" ng-if="act.batch" class="md-raised {{act.className}}" ng-bind="act.html"
+            <md-button ng-repeat="act in config.actions" ng-if="act.batch" class="md-raised {{act.className}}"
+                       ng-bind="act.html"
                        ng-click="onBatch(act, $event)"></md-button>
         </div>
         <div flex layout="row" layout-align="end">
-            <md-button ng-if="config.enableExport" ng-click="onExport('xls')">导出xls</md-button>
-            <md-button ng-if="config.enableExport" ng-click="onExport('csv')">导出csv</md-button>
+            <md-button ng-if="config.enableExport && config.exportOptions.xls" ng-click="onExport('xls')">导出xls</md-button>
+            <md-button ng-if="config.enableExport && config.exportOptions.csv" ng-click="onExport('csv')">导出csv</md-button>
         </div>
     </div>
 </div>

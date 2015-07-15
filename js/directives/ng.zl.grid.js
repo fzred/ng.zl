@@ -5,6 +5,7 @@ angular.module('ng.zl.grid', ['ng.zl', 'ng.zl.exporter']).directive('zlGrid', fu
     /*$scope.gridData = {
      enableSelect: true,
      enableExport: true,
+     exportOptions: {xls: true, csv: true, forceString: false},
      columns: [
      {field: 'serialNumber', name: '序号'},
      {field: 'type', name: '类型', edit: true, editType: 'input', afterEdit: afterEdit},
@@ -42,6 +43,7 @@ angular.module('ng.zl.grid', ['ng.zl', 'ng.zl.exporter']).directive('zlGrid', fu
                 watchReload: false,
                 enableSelect: false,
                 enableExport: false,
+                exportOptions: {xls: true, csv: true, force2String: false},
                 columns: null,
                 data: [],
                 next: null,
@@ -121,6 +123,19 @@ angular.module('ng.zl.grid', ['ng.zl', 'ng.zl.exporter']).directive('zlGrid', fu
                         });
                     }
                 });
+                //// 强制转换成字符串 方案不是很晚上，暂不支持
+                //if($scope.config.exportOptions.force2String){
+                //    _.each(data, function (value) {
+                //        _.each(value, function (val, k) {
+                //            if(val !== null && val !== undefined){
+                //                var s = val.toString();
+                //                if(s.length > 0 && s[0] !== '\''){
+                //                    value[k] = '\'' + val;
+                //                }
+                //            }
+                //        });
+                //    });
+                //}
                 if(type === 'csv'){
                     $zlExporter.toCsv('table', data, exportColumns);
                 }else if(type === 'xls'){
