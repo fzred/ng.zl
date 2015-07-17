@@ -42,8 +42,8 @@
         </tbody>
     </table>
     <div layout="row">
-        <md-button class="md-raised" ng-click="getData()" ng-if="config.next">More</md-button>
-        <md-button class="md-raised" ng-if="!config.next" ng-disabled="true">No More</md-button>
+        <md-button class="md-raised" ng-click="getData()" ng-if="config.next">更多</md-button>
+        <md-button class="md-raised" ng-if="!config.next" ng-disabled="true">没有更多</md-button>
         <div flex ng-if="config.enableSelect && config.actions.length > 0">
             <md-button ng-repeat="act in config.actions" ng-if="act.batch" class="md-raised {{act.className}}"
                        ng-bind="act.html"
