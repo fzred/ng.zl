@@ -88,6 +88,7 @@ angular.module('ng.zl.grid', ['ng.zl', 'ng.zl.exporter']).directive('zlGrid', fu
             $scope.$watch('config.watchReload', function (newValue) {
                 if (newValue) {
                     $scope.config.data = [];
+                    $scope.config.next = null;
                     $scope.getData();
                     $scope.config.watchReload = false;
                 }
