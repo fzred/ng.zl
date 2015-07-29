@@ -857,7 +857,7 @@ angular.module('ng.zl').factory('$zl', ["$mdDialog", "$mdToast", "$compile", "$r
             scroll.set(0);
         },
         bottom: function () {
-            scroll.set($(document.body).height());
+            scroll.set($('.site-content>div:first').height());
         },
         page: function () {
             scroll.set(document.body.scrollTop + document.documentElement.clientHeight);

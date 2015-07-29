@@ -107,7 +107,7 @@ angular.module('ng.zl').factory('$zl', function ($mdDialog, $mdToast, $compile, 
             scroll.set(0);
         },
         bottom: function () {
-            scroll.set($(document.body).height());
+            scroll.set($('.site-content>div:first').height());
         },
         page: function () {
             scroll.set(document.body.scrollTop + document.documentElement.clientHeight);
