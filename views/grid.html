@@ -30,7 +30,7 @@
                 </div>
                 <div ng-if="col.edit && col.editType === 'switch'">
                     <div zl-grid-edit-switch grid-model="data[col.field]"
-                         grid-after-edit="onAfterEdit(value, col, data)"></div>
+                         grid-after-edit="onAfterEdit(value, col, data)" grid-edit-ever="col.editEver"></div>
                 </div>
             </td>
 

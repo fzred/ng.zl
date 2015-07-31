@@ -267,7 +267,8 @@ angular.module('ng.zl.grid', ['ng.zl', 'ng.zl.exporter']).directive('zlGrid', fu
         replace: true,
         scope: {
             gridModel: '=',
-            gridAfterEdit: '&'
+            gridAfterEdit: '&',
+            gridEditEver: '='
         },
         templateUrl: 'views/grid.edit.switch.html',
         controller: function ($scope, $element) {
