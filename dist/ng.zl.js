@@ -851,14 +851,14 @@ angular.module('ng.zl').factory('$zl', ["$mdDialog", "$mdToast", "$compile", "$r
 
     var scroll = {
         set: function (value) {
-            var _content = $('.site-content')[0];
+            var _content = $('#_siteContent')[0];
             _content.scrollTop = value;
         },
         top: function () {
             scroll.set(0);
         },
         bottom: function () {
-            scroll.set($('.site-content>div:first').height());
+            scroll.set($('#_siteContent>div:first').height());
         },
         page: function () {
             scroll.set(document.body.scrollTop + document.documentElement.clientHeight);

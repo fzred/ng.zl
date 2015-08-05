@@ -113,7 +113,8 @@
 
             'demo/templates.min.js',
 
-            'demo/app.js'
+            'demo/app.js',
+            'demo/index.js'
         ], {read: false});
 
         return target.pipe(inject(sources, {relative: true})).pipe(gulp.dest('demo'));
